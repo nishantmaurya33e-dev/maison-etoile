@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#101827"/>
+  <!-- Outer Gold Border -->
+  <rect x="2" y="2" width="60" height="60" rx="12" fill="none" stroke="#C8A878" stroke-width="1" stroke-opacity="0.4"/>
+  <!-- 8-pointed star / Maison Étoile star motif -->
+  <g transform="translate(32,32)">
+    <!-- Main 4 cardinal rays -->
+    <path d="M0 -22 L3 -6 L19 0 L3 6 L0 22 L-3 6 L-19 0 L-3 -6 Z" fill="#C8A878" />
+    <!-- Diagonal 4 rays -->
+    <path d="M0 -15 L2 -4 L13 0 L2 4 L0 15 L-2 4 L-13 0 L-2 -4 Z" fill="#E8DFD0" opacity="0.85" transform="rotate(45)" />
+    <!-- Center core jewel -->
+    <circle cx="0" cy="0" r="2.5" fill="#101827" stroke="#C8A878" stroke-width="1"/>
+  </g>
+</svg>

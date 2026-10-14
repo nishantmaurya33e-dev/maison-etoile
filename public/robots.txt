@@ -1,0 +1,8 @@
+# Maison Étoile — Production Robots Configuration
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /staging/
+
+Sitemap: https://maisonetoile.example/sitemap.xml
