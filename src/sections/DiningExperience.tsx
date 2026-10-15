@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Utensils, Wine, Crown, ArrowRight, X } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 export const DiningExperience: React.FC = () => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -39,7 +40,7 @@ export const DiningExperience: React.FC = () => {
           <div className="experience-image-card reveal-on-scroll">
             <div className="experience-image-inner">
               <img
-                src="/images/story/story-interior.jpg"
+                src={getAssetUrl('images/story/story-interior.jpg')}
                 alt="Ambiance féerique du restaurant Maison Étoile illuminé aux chandelles"
                 className="exp-img"
                 loading="lazy"
@@ -128,14 +129,27 @@ export const DiningExperience: React.FC = () => {
                   <p style={{ fontSize: '1rem', lineHeight: 1.8, color: 'var(--color-ivory-dim)', marginBottom: '1.5rem' }}>
                     {p.modalDetail}
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => setActiveModal(null)}
-                    className="btn-glass-primary"
-                    style={{ minWidth: '160px', height: '44px' }}
-                  >
-                    COMPRIS
-                  </button>
+                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModal(null);
+                        document.querySelector('#reservations')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="btn-glass-primary"
+                      style={{ minWidth: '180px', height: '46px' }}
+                    >
+                      RÉSERVER CE SERVICE
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveModal(null)}
+                      className="btn-secondary"
+                      style={{ height: '46px', padding: '0 1.5rem' }}
+                    >
+                      Fermer
+                    </button>
+                  </div>
                 </div>
               ))}
           </div>

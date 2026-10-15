@@ -3,6 +3,7 @@ import { SIGNATURE_DISHES, ALL_MENU_ITEMS } from '../data/restaurantData';
 import { DishItem } from '../types';
 import { Wine, Sparkles, Check } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { getAssetUrl } from '../utils/assets';
 
 interface MenuPreviewProps {
   onReserveDish?: (dishName: string) => void;
@@ -87,7 +88,7 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
               {/* Image Frame */}
               <div className="dish-image-wrapper">
                 <img
-                  src={dish.image}
+                  src={getAssetUrl(dish.image)}
                   alt={dish.name}
                   className="dish-image"
                   loading="lazy"
@@ -170,7 +171,7 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
           >
             <div className="dish-modal-img-col">
               <img
-                src={selectedDishModal.image}
+                src={getAssetUrl(selectedDishModal.image)}
                 alt={selectedDishModal.name}
                 className="modal-dish-img"
               />

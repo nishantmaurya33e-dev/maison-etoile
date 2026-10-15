@@ -107,6 +107,10 @@ img {
   section {
     scroll-margin-top: 75px;
   }
+  /* Prevent iOS automatic viewport zoom upon focus */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
 }
 
 /* Section Header Shared Patterns */
@@ -384,8 +388,8 @@ img {
   height: 100%;
   object-fit: cover;
   object-position: center 35%;
-  transform: scale(1.04);
-  transition: transform 8s ease-out;
+  transform: scale(1.02);
+  animation: heroKenBurns 22s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
 }
 
 .hero-overlay-gradient {
@@ -422,20 +426,27 @@ img {
    LUXURY RISE & REVEAL ANIMATION SYSTEM
    ========================================================================== */
 
+/* Cinematic slow Ken Burns zoom */
+@keyframes heroKenBurns {
+  0% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1.10);
+  }
+}
+
 /* Hero On-Load Animations */
 @keyframes heroReveal {
   0% {
     opacity: 0;
-    transform: translateY(28px);
-    clip-path: inset(0 0 100% 0);
-  }
-  50% {
-    clip-path: inset(0 0 0 0);
+    transform: translateY(32px);
+    filter: blur(3px);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
-    clip-path: inset(0 0 0 0);
+    filter: blur(0);
   }
 }
 

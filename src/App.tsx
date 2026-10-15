@@ -10,7 +10,8 @@ import { Footer } from './sections/Footer';
 import { LegalModal, LegalDocType } from './components/LegalModal';
 import { GoldDivider } from './components/GoldDivider';
 import { useScrollReveal } from './hooks/useScrollReveal';
-import { X, Volume2, VolumeX, Sparkles, Film } from 'lucide-react';
+import { X, Volume2, VolumeX, Sparkles, Film, Calendar } from 'lucide-react';
+import { getAssetUrl } from './utils/assets';
 
 export const App: React.FC = () => {
   useScrollReveal();
@@ -47,12 +48,17 @@ export const App: React.FC = () => {
   }, [storyVideoOpen]);
 
   // Ambient sound synthesis using Web Audio API (warm Parisian candlelight chord)
-  const startAmbientAudio = () => {
+  const startAmbientAudio = async () => {
     try {
       const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
       if (!AudioCtx) return;
-      const ctx = new AudioCtx();
+      const ctx = audioCtxRef.current || new AudioCtx();
       audioCtxRef.current = ctx;
+
+      // Crucial for mobile iOS Safari & Android Chrome: AudioContext starts suspended
+      if (ctx.state === 'suspended') {
+        await ctx.resume();
+      }
 
       const masterGain = ctx.createGain();
       masterGain.gain.setValueAtTime(0.01, ctx.currentTime);
@@ -117,26 +123,6 @@ export const App: React.FC = () => {
 
   return (
     <div className="maison-etoile-app">
-      {/* Top Banner Notice */}
-      <aside
-        aria-label="Avertissement de démonstration"
-        style={{
-          background: 'linear-gradient(90deg, #17243B 0%, #101827 50%, #17243B 100%)',
-          borderBottom: '1px solid rgba(200, 168, 120, 0.25)',
-          padding: '0.45rem 1rem',
-          textAlign: 'center',
-          fontSize: '0.6875rem',
-          fontFamily: 'var(--font-sans)',
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          color: 'var(--color-gold)',
-          position: 'relative',
-          zIndex: 101
-        }}
-      >
-        <span>✦ MAISON ÉTOILE PARIS — SITE OFFICIEL DE DÉMONSTRATION ARTISTIQUE & PORTFOLIO ✦</span>
-      </aside>
-
       {/* Main Navigation */}
       <Navbar onOpenReservationModal={() => handleScrollToSection('reservations')} />
 
@@ -230,7 +216,7 @@ export const App: React.FC = () => {
             <div className="story-video-stage">
               <div className="video-hero-image-wrap">
                 <img
-                  src="/images/hero/hero-cinematic.jpg"
+                  src={getAssetUrl('images/hero/hero-cinematic.jpg')}
                   alt="Présentation cinématographique Maison Étoile"
                   className="video-stage-img"
                 />
@@ -313,6 +299,19 @@ export const App: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Mobile Floating Quick Reservation Button */}
+      <div className="mobile-floating-reserve-bar">
+        <button
+          type="button"
+          onClick={() => handleScrollToSection('reservations')}
+          className="btn-glass-primary mobile-fab-reserve"
+          aria-label="Réserver une table rapidement"
+        >
+          <Calendar size={15} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
+          <span>RÉSERVER UNE TABLE</span>
+        </button>
+      </div>
 
       <style>{`
         .story-video-overlay {
@@ -454,6 +453,33 @@ export const App: React.FC = () => {
           }
           .story-video-content-banner {
             padding: 1.5rem;
+          }
+        }
+
+        .mobile-floating-reserve-bar {
+          display: none;
+        }
+
+        @media (max-width: 768px) {
+          .mobile-floating-reserve-bar {
+            display: flex;
+            position: fixed;
+            bottom: 18px;
+            right: 18px;
+            left: 18px;
+            z-index: 85;
+            justify-content: center;
+            pointer-events: none;
+          }
+          .mobile-fab-reserve {
+            pointer-events: auto;
+            width: 100%;
+            max-width: 340px;
+            height: 52px;
+            background: linear-gradient(135deg, rgba(23, 36, 59, 0.95) 0%, rgba(200, 168, 120, 0.28) 100%);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8), 0 0 18px rgba(200, 168, 120, 0.35);
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
           }
         }
       `}</style>

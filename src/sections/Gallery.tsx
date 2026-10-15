@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { GALLERY_ITEMS } from '../data/restaurantData';
 import { GalleryItem } from '../types';
 import { X, ChevronLeft, ChevronRight, Eye, ArrowRight } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 export const Gallery: React.FC = () => {
   const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null);
@@ -95,7 +96,7 @@ export const Gallery: React.FC = () => {
               <div className="gallery-inner-border" aria-hidden="true" />
 
               <img
-                src={item.image}
+                src={getAssetUrl(item.image)}
                 alt={item.title}
                 className="gallery-thumb"
                 loading="lazy"
@@ -167,7 +168,7 @@ export const Gallery: React.FC = () => {
           >
             <div className="lightbox-img-frame">
               <img
-                src={currentItem.image}
+                src={getAssetUrl(currentItem.image)}
                 alt={currentItem.title}
                 className="lightbox-current-img"
               />

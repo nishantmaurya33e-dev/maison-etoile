@@ -12,7 +12,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -60,40 +60,23 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
     <>
       <header
         role="banner"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          transition: 'all 0.35s ease',
-          backgroundColor: isScrolled
-            ? 'rgba(16, 24, 39, 0.92)'
-            : 'rgba(16, 24, 39, 0.45)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
-          borderBottom: isScrolled
-            ? '1px solid rgba(200, 168, 120, 0.25)'
-            : '1px solid rgba(232, 223, 208, 0.08)',
-          boxShadow: isScrolled ? '0 10px 30px rgba(0, 0, 0, 0.45)' : 'none'
-        }}
+        className={`site-header ${isScrolled ? 'header-scrolled' : ''}`}
       >
-        <div
-          className="container-wide"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            height: isScrolled ? '74px' : '90px',
-            transition: 'height 0.35s ease'
-          }}
+        {/* Top Demo Notice Banner - Integrated seamlessly above navigation */}
+        <aside
+          aria-label="Avertissement de démonstration"
+          className="header-top-banner"
         >
+          <span>✦ MAISON ÉTOILE PARIS — SITE OFFICIEL DE DÉMONSTRATION ARTISTIQUE & PORTFOLIO ✦</span>
+        </aside>
+
+        <div className="container-wide header-nav-row">
           {/* Logo link */}
           <a
             href="#hero"
             onClick={(e) => handleLinkClick(e, '#hero')}
             aria-label="Maison Étoile Accueil"
-            style={{ display: 'inline-block' }}
+            className="brand-logo-link"
           >
             <BrandMark variant="compact" />
           </a>
@@ -102,11 +85,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           <nav
             role="navigation"
             aria-label="Navigation principale"
-            style={{
-              display: 'none',
-              alignItems: 'center',
-              gap: '2.5rem'
-            }}
             className="desktop-nav"
           >
             {navLinks.map((link) => (
@@ -114,15 +92,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.8125rem',
-                  fontWeight: 400,
-                  letterSpacing: '0.18em',
-                  color: 'var(--color-ivory)',
-                  transition: 'color var(--transition-fast), transform var(--transition-fast)',
-                  position: 'relative'
-                }}
                 className="nav-link-item"
               >
                 {link.label}
@@ -131,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           </nav>
 
           {/* Reservation Action Button & Mobile Menu Toggle */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div className="header-actions">
             <a
               href="#reservations"
               onClick={(e) => {
@@ -143,16 +112,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
                 }
               }}
               className="btn-glass-primary reserve-nav-btn"
-              style={{
-                height: '44px',
-                minWidth: '140px',
-                padding: '0 1.5rem',
-                fontSize: '0.75rem',
-                letterSpacing: '0.16em'
-              }}
+              aria-label="Réserver une table à Maison Étoile"
             >
               <Calendar size={14} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
-              <span>RÉSERVER</span>
+              <span className="reserve-btn-text">RÉSERVER</span>
             </a>
 
             {/* Mobile Toggle Button */}
@@ -163,17 +126,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation-drawer"
               className="mobile-toggle-btn"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                background: 'rgba(23, 36, 59, 0.6)',
-                border: '1px solid var(--color-gold-border)',
-                color: 'var(--color-ivory)'
-              }}
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -187,106 +139,126 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
         role="dialog"
         aria-modal="true"
         aria-label="Menu mobile Maison Étoile"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: 99,
-          backgroundColor: 'rgba(16, 24, 39, 0.98)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '2rem',
-          padding: '2rem',
-          opacity: mobileMenuOpen ? 1 : 0,
-          pointerEvents: mobileMenuOpen ? 'all' : 'none',
-          transform: mobileMenuOpen ? 'translateY(0)' : 'translateY(-15px)',
-          transition: 'opacity 0.35s ease, transform 0.35s ease'
-        }}
+        className={`mobile-drawer-overlay ${mobileMenuOpen ? 'is-open' : ''}`}
       >
-        <BrandMark subtitle="L'art de savourer l'instant" />
-        
-        <div
-          style={{
-            width: '80px',
-            height: '1px',
-            background: 'linear-gradient(90deg, transparent, var(--color-gold), transparent)',
-            margin: '0.5rem 0'
-          }}
-        />
-
-        <nav
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1.5rem',
-            textAlign: 'center'
-          }}
+        {/* Explicit Close Button inside Drawer */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(false)}
+          className="drawer-close-btn"
+          aria-label="Fermer le menu"
         >
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href)}
-              style={{
-                fontFamily: 'var(--font-serif)',
-                fontSize: '1.45rem',
-                letterSpacing: '0.12em',
-                color: 'var(--color-ivory)',
-                padding: '0.4rem 1rem'
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+          <X size={24} />
+        </button>
 
-        <a
-          href="#reservations"
-          onClick={(e) => {
-            setMobileMenuOpen(false);
-            if (onOpenReservationModal) {
-              e.preventDefault();
-              onOpenReservationModal();
-            } else {
-              handleLinkClick(e, '#reservations');
-            }
-          }}
-          className="btn-glass-primary"
-          style={{ width: '80%', maxWidth: '280px', marginTop: '1rem' }}
-        >
-          RÉSERVER UNE TABLE
-        </a>
+        <div className="drawer-inner-content">
+          <BrandMark subtitle="L'art de savourer l'instant" />
+          
+          <div className="drawer-divider" aria-hidden="true" />
+
+          <nav className="mobile-nav-list" aria-label="Liens mobiles">
+            {navLinks.map((link, idx) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleLinkClick(e, link.href)}
+                className="mobile-nav-item"
+                style={{ animationDelay: `${0.05 * (idx + 1)}s` }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          <a
+            href="#reservations"
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              if (onOpenReservationModal) {
+                e.preventDefault();
+                onOpenReservationModal();
+              } else {
+                handleLinkClick(e, '#reservations');
+              }
+            }}
+            className="btn-glass-primary mobile-drawer-reserve-btn"
+          >
+            <span>RÉSERVER UNE TABLE</span>
+          </a>
+        </div>
       </div>
 
       <style>{`
-        @media (min-width: 992px) {
-          .desktop-nav {
-            display: flex !important;
-          }
-          .mobile-toggle-btn {
-            display: none !important;
-          }
+        .site-header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 100;
+          transition: all 0.35s ease;
+          background: rgba(16, 24, 39, 0.65);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border-bottom: 1px solid rgba(232, 223, 208, 0.08);
         }
-        @media (max-width: 991px) {
-          .desktop-nav {
-            display: none !important;
-          }
+
+        .header-scrolled {
+          background: rgba(16, 24, 39, 0.94);
+          border-bottom: 1px solid rgba(200, 168, 120, 0.25);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
         }
-        @media (max-width: 520px) {
-          .reserve-nav-btn {
-            display: none !important;
-          }
+
+        .header-top-banner {
+          background: linear-gradient(90deg, #17243B 0%, #101827 50%, #17243B 100%);
+          border-bottom: 1px solid rgba(200, 168, 120, 0.2);
+          padding: 0.35rem 1rem;
+          text-align: center;
+          font-size: 0.6875rem;
+          font-family: var(--font-sans);
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--color-gold);
+          transition: all 0.3s ease;
         }
+
+        .header-nav-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 76px;
+          transition: height 0.35s ease;
+        }
+
+        .header-scrolled .header-nav-row {
+          height: 68px;
+        }
+
+        .brand-logo-link {
+          display: inline-flex;
+          align-items: center;
+          z-index: 10;
+        }
+
+        .desktop-nav {
+          display: none;
+          align-items: center;
+          gap: 2.25rem;
+        }
+
+        .nav-link-item {
+          font-family: var(--font-sans);
+          font-size: 0.8125rem;
+          font-weight: 400;
+          letter-spacing: 0.18em;
+          color: var(--color-ivory);
+          transition: color var(--transition-fast), transform var(--transition-fast);
+          position: relative;
+        }
+
         .nav-link-item:hover {
           color: var(--color-gold) !important;
         }
+
         .nav-link-item::after {
           content: '';
           position: absolute;
@@ -297,9 +269,171 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           background-color: var(--color-gold);
           transition: width 0.25s ease, left 0.25s ease;
         }
+
         .nav-link-item:hover::after {
           width: 100%;
           left: 0;
+        }
+
+        .header-actions {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+        }
+
+        .reserve-nav-btn {
+          height: 44px;
+          min-width: 135px;
+          padding: 0 1.25rem;
+          font-size: 0.75rem;
+          letter-spacing: 0.16em;
+        }
+
+        .mobile-toggle-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(23, 36, 59, 0.7);
+          border: 1px solid var(--color-gold-border);
+          color: var(--color-ivory);
+          transition: all var(--transition-fast);
+        }
+
+        .mobile-toggle-btn:hover {
+          border-color: var(--color-gold);
+          background: rgba(200, 168, 120, 0.15);
+        }
+
+        /* Mobile Drawer Overlay */
+        .mobile-drawer-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 150;
+          background-color: rgba(10, 15, 25, 0.98);
+          backdrop-filter: blur(28px);
+          -webkit-backdrop-filter: blur(28px);
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 3.5rem 1.5rem;
+          opacity: 0;
+          pointer-events: none;
+          transform: translateY(-15px);
+          transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .mobile-drawer-overlay.is-open {
+          opacity: 1;
+          pointer-events: all;
+          transform: translateY(0);
+        }
+
+        .drawer-close-btn {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(23, 36, 59, 0.8);
+          border: 1px solid var(--color-gold-border);
+          color: var(--color-ivory);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all var(--transition-fast);
+        }
+
+        .drawer-close-btn:hover {
+          color: #fff;
+          border-color: var(--color-gold);
+        }
+
+        .drawer-inner-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 1.5rem;
+          max-width: 340px;
+          width: 100%;
+          margin: auto;
+        }
+
+        .drawer-divider {
+          width: 70px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+          margin: 0.25rem 0;
+        }
+
+        .mobile-nav-list {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.15rem;
+          width: 100%;
+        }
+
+        .mobile-nav-item {
+          font-family: var(--font-serif);
+          font-size: 1.35rem;
+          letter-spacing: 0.12em;
+          color: var(--color-ivory);
+          padding: 0.35rem 1rem;
+          display: block;
+          transition: color var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .mobile-nav-item:hover, .mobile-nav-item:active {
+          color: var(--color-gold);
+          transform: translateY(-2px);
+        }
+
+        .mobile-drawer-reserve-btn {
+          width: 100%;
+          max-width: 260px;
+          height: 52px;
+          margin-top: 0.75rem;
+        }
+
+        @media (min-width: 992px) {
+          .desktop-nav {
+            display: flex !important;
+          }
+          .mobile-toggle-btn {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 991px) {
+          .desktop-nav {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 420px) {
+          .header-top-banner {
+            font-size: 0.625rem;
+            padding: 0.25rem 0.5rem;
+          }
+          .reserve-btn-text {
+            display: none;
+          }
+          .reserve-nav-btn {
+            min-width: 44px;
+            width: 44px;
+            padding: 0;
+            border-radius: 50%;
+          }
         }
       `}</style>
     </>

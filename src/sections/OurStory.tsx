@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Compass } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 interface OurStoryProps {
   onDiscoverMore?: () => void;
@@ -15,7 +16,7 @@ export const OurStory: React.FC<OurStoryProps> = ({ onDiscoverMore }) => {
             <div className="story-frame">
               <div className="story-inner-border" aria-hidden="true" />
               <img
-                src="/images/story/story-interior.jpg"
+                src={getAssetUrl('images/story/story-interior.jpg')}
                 alt="Intérieur raffiné de la salle de réception Maison Étoile à Paris, lustres de cristal et vue sur la Seine"
                 className="story-image"
                 loading="lazy"

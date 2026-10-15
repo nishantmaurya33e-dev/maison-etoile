@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Play } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 interface HeroProps {
   onExploreMenu: () => void;
@@ -21,7 +22,7 @@ export const Hero: React.FC<HeroProps> = ({
       {/* Edge-to-Edge Full-Bleed Cinematic Hero Image Layer */}
       <div className="hero-bg-container" aria-hidden="true">
         <img
-          src="/images/hero/hero-cinematic.jpg"
+          src={getAssetUrl('images/hero/hero-cinematic.jpg')}
           alt="Haute gastronomie française à Maison Étoile"
           className="hero-full-bg-image"
           loading="eager"
@@ -95,9 +96,42 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
           </div>
         </div>
+        {/* Subtle Ambient Candlelight Sparkle Motes */}
+        <div className="hero-sparkles-layer" aria-hidden="true">
+          <span className="sparkle-mote s1">✦</span>
+          <span className="sparkle-mote s2">✦</span>
+          <span className="sparkle-mote s3">✦</span>
+          <span className="sparkle-mote s4">✦</span>
+        </div>
       </div>
 
       <style>{`
+        .hero-sparkles-layer {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          z-index: 4;
+          overflow: hidden;
+        }
+
+        .sparkle-mote {
+          position: absolute;
+          color: var(--color-gold);
+          font-size: 0.85rem;
+          opacity: 0.35;
+          animation: stardustTwinkle 6s ease-in-out infinite;
+        }
+
+        .s1 { top: 20%; left: 15%; animation-delay: 0s; font-size: 0.75rem; }
+        .s2 { top: 35%; right: 18%; animation-delay: 2s; font-size: 0.95rem; }
+        .s3 { bottom: 25%; left: 28%; animation-delay: 4s; font-size: 0.65rem; }
+        .s4 { top: 65%; right: 24%; animation-delay: 1.5s; font-size: 0.8rem; }
+
+        @keyframes stardustTwinkle {
+          0%, 100% { opacity: 0.2; transform: translateY(0) scale(0.9); }
+          50% { opacity: 0.8; transform: translateY(-10px) scale(1.15); }
+        }
+
         .hero-text-content {
           max-width: 780px;
           text-align: left;
@@ -127,7 +161,7 @@ export const Hero: React.FC<HeroProps> = ({
         }
 
         .hero-title {
-          font-size: clamp(2.5rem, 5vw, 4.4rem);
+          font-size: clamp(2.1rem, 5.8vw, 4.4rem);
           line-height: 1.1;
           font-weight: 500;
           letter-spacing: 0.03em;
@@ -144,7 +178,7 @@ export const Hero: React.FC<HeroProps> = ({
         }
 
         .hero-subtext {
-          font-size: clamp(1rem, 1.3vw, 1.18rem);
+          font-size: clamp(0.95rem, 1.25vw, 1.18rem);
           color: var(--color-ivory);
           max-width: 580px;
           margin-bottom: 2.75rem;
@@ -206,13 +240,30 @@ export const Hero: React.FC<HeroProps> = ({
           .hero-subtext {
             margin-left: auto;
             margin-right: auto;
+            margin-bottom: 2rem;
           }
           .hero-actions {
             justify-content: center;
+            margin-bottom: 2.5rem;
           }
           .hero-meta {
             justify-content: center;
             margin: 0 auto;
+          }
+        }
+
+        @media (max-width: 520px) {
+          .hero-meta {
+            gap: 1rem 1.5rem;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 100%;
+          }
+          .meta-divider {
+            display: none;
+          }
+          .meta-item {
+            text-align: center;
           }
         }
 

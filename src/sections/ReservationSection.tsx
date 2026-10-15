@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ReservationFormData, ReservationConfirmation } from '../types';
-import { Calendar, Users, Clock, AlertCircle, CheckCircle2, ShieldCheck, Info } from 'lucide-react';
+import { Calendar, Users, Clock, AlertCircle, CheckCircle2, ShieldCheck, Info, Sparkles } from 'lucide-react';
+import { getAssetUrl } from '../utils/assets';
 
 interface ReservationSectionProps {
   initialDishPreference?: string;
@@ -20,6 +21,18 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
     accessibilityRequests: '',
     acceptedTerms: false
   });
+
+  // Synchronize dish preference when clicked from Menu preview
+  useEffect(() => {
+    if (initialDishPreference) {
+      setFormData((prev) => ({
+        ...prev,
+        dietaryNotes: prev.dietaryNotes && !prev.dietaryNotes.includes(initialDishPreference)
+          ? `${prev.dietaryNotes} | Choix souhaité : ${initialDishPreference}`
+          : `Intérêt particulier pour le plat sélectionné : ${initialDishPreference}`
+      }));
+    }
+  }, [initialDishPreference]);
 
   const [errors, setErrors] = useState<Partial<Record<keyof ReservationFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -129,7 +142,11 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
     <section id="reservations" className="section" aria-label="Réservation d'une table">
       {/* Table Awaits Banner Header */}
       <div className="table-awaits-banner">
-        <div className="banner-bg-img" aria-hidden="true" />
+        <div
+          className="banner-bg-img"
+          style={{ backgroundImage: `url(${getAssetUrl('images/gallery/gallery-table.jpg')})` }}
+          aria-hidden="true"
+        />
         <div className="banner-overlay" />
         <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center' }}>
           <div className="section-label reveal-on-scroll stagger-1">YOUR TABLE AWAITS</div>
@@ -152,6 +169,32 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
               </p>
             </div>
           </div>
+
+          {/* Dynamic Dish Selection Pill if selected from Menu */}
+          {initialDishPreference && (
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.65rem',
+                padding: '0.65rem 1.25rem',
+                borderRadius: 'var(--radius-pill)',
+                background: 'rgba(200, 168, 120, 0.15)',
+                border: '1px solid var(--color-gold)',
+                color: 'var(--color-ivory)',
+                fontSize: '0.8125rem',
+                marginBottom: '1.75rem',
+                width: '100%',
+                boxSizing: 'border-box'
+              }}
+              role="status"
+            >
+              <Sparkles size={16} style={{ color: 'var(--color-gold)', flexShrink: 0 }} aria-hidden="true" />
+              <span>
+                Plat présélectionné pour votre table : <strong style={{ color: 'var(--color-gold)' }}>{initialDishPreference}</strong>
+              </span>
+            </div>
+          )}
 
           {!confirmation ? (
             <form onSubmit={handleSubmit} noValidate className="reservation-form">
@@ -414,7 +457,6 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
         .banner-bg-img {
           position: absolute;
           inset: 0;
-          background-image: url('/images/gallery/gallery-table.jpg');
           background-size: cover;
           background-position: center;
           filter: blur(2px) brightness(0.35);

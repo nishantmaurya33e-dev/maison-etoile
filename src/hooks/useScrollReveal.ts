@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 /**
- * Custom hook to trigger Rise and Reveal animations as elements enter the viewport.
+ * Custom hook to trigger Rise and Reveal cinematic animations as elements enter the viewport.
  * Uses IntersectionObserver with automatic cleanup and fallback for reduced-motion/older browsers.
  */
 export function useScrollReveal(dependency?: any) {
@@ -33,22 +33,19 @@ export function useScrollReveal(dependency?: any) {
           });
         },
         {
-          threshold: 0.08,
-          rootMargin: '0px 0px -30px 0px'
+          threshold: 0.05,
+          rootMargin: '0px 0px -15px 0px'
         }
       );
       observer = io;
 
       revealElements.forEach((el) => {
-        // If element is already in viewport on load, reveal immediately
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          el.classList.add('is-revealed');
-        } else {
+        // Only observe elements that haven't been revealed yet
+        if (!el.classList.contains('is-revealed')) {
           io.observe(el);
         }
       });
-    }, 40);
+    }, 60);
 
     return () => {
       clearTimeout(timer);
