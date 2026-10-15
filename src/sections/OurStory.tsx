@@ -181,15 +181,28 @@ export const OurStory: React.FC<OurStoryProps> = ({ onDiscoverMore }) => {
         .story-highlights {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 1.5rem;
-          border-top: 1px solid rgba(232, 223, 208, 0.1);
-          padding-top: 1.75rem;
+          gap: 1.25rem;
+          margin-top: 2rem;
         }
 
         .highlight-card {
           display: flex;
           align-items: flex-start;
-          gap: 0.85rem;
+          gap: 1rem;
+          padding: 1.25rem;
+          background: linear-gradient(145deg, rgba(23, 36, 59, 0.55) 0%, rgba(16, 24, 39, 0.7) 100%);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(200, 168, 120, 0.25);
+          border-radius: 12px;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+          transition: all var(--transition-fast);
+        }
+
+        .highlight-card:hover {
+          border-color: var(--color-gold);
+          transform: translateY(-2px);
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 18px rgba(200, 168, 120, 0.18);
         }
 
         .highlight-icon {
@@ -232,7 +245,7 @@ export const OurStory: React.FC<OurStoryProps> = ({ onDiscoverMore }) => {
         @media (max-width: 580px) {
           .story-highlights {
             grid-template-columns: 1fr;
-            gap: 1.25rem;
+            gap: 1rem;
           }
         }
       `}</style>

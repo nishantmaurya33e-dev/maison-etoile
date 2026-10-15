@@ -196,12 +196,16 @@ export const Hero: React.FC<HeroProps> = ({
         }
 
         .hero-meta {
-          display: flex;
+          display: inline-flex;
           align-items: center;
-          gap: 2rem;
-          padding-top: 1.75rem;
-          border-top: 1px solid rgba(232, 223, 208, 0.18);
-          max-width: 520px;
+          gap: 1.75rem;
+          padding: 0.95rem 1.85rem;
+          background: linear-gradient(135deg, rgba(23, 36, 59, 0.62) 0%, rgba(16, 24, 39, 0.78) 100%);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(200, 168, 120, 0.35);
+          border-radius: var(--radius-pill);
+          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(232, 223, 208, 0.15);
         }
 
         .meta-item {
@@ -229,7 +233,7 @@ export const Hero: React.FC<HeroProps> = ({
         .meta-divider {
           width: 1px;
           height: 28px;
-          background: rgba(232, 223, 208, 0.2);
+          background: rgba(200, 168, 120, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -247,23 +251,33 @@ export const Hero: React.FC<HeroProps> = ({
             margin-bottom: 2.5rem;
           }
           .hero-meta {
-            justify-content: center;
             margin: 0 auto;
           }
         }
 
-        @media (max-width: 520px) {
+        @media (max-width: 580px) {
           .hero-meta {
-            gap: 1rem 1.5rem;
-            flex-wrap: wrap;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.35rem;
+            padding: 0.85rem 0.5rem;
             width: 100%;
+            max-width: 360px;
+            border-radius: 14px;
+            box-sizing: border-box;
           }
           .meta-divider {
             display: none;
           }
           .meta-item {
             text-align: center;
+          }
+          .meta-number {
+            font-size: 1.2rem;
+          }
+          .meta-label {
+            font-size: 0.5625rem;
+            letter-spacing: 0.08em;
           }
         }
 

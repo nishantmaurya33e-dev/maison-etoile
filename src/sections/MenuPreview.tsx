@@ -233,58 +233,76 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
           display: flex;
           justify-content: center;
           gap: 0.75rem;
-          margin-top: 2rem;
+          margin-top: 2.25rem;
           flex-wrap: wrap;
         }
 
         .filter-pill {
-          padding: 0.5rem 1.25rem;
+          padding: 0.6rem 1.35rem;
           border-radius: var(--radius-pill);
-          background: rgba(23, 36, 59, 0.4);
-          border: 1px solid rgba(232, 223, 208, 0.15);
+          background: linear-gradient(135deg, rgba(23, 36, 59, 0.5) 0%, rgba(16, 24, 39, 0.7) 100%);
+          border: 1px solid rgba(200, 168, 120, 0.28);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           color: var(--color-ivory-dim);
           font-family: var(--font-sans);
           font-size: 0.75rem;
           font-weight: 500;
-          letter-spacing: 0.08em;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
           transition: all var(--transition-fast);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
         }
 
         .filter-pill:hover {
-          color: var(--color-ivory);
-          border-color: var(--color-gold-border);
-          background: rgba(200, 168, 120, 0.1);
+          color: #FFFFFF;
+          border-color: var(--color-gold);
+          background: rgba(200, 168, 120, 0.18);
+          transform: translateY(-1px);
         }
 
         .filter-pill.active {
-          background: rgba(200, 168, 120, 0.2);
+          background: linear-gradient(135deg, rgba(200, 168, 120, 0.35) 0%, rgba(23, 36, 59, 0.8) 100%);
           border-color: var(--color-gold);
           color: #FFFFFF;
-          box-shadow: 0 0 15px rgba(200, 168, 120, 0.2);
+          box-shadow: 0 0 20px rgba(200, 168, 120, 0.32), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         }
 
         .dishes-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 1.75rem;
+          gap: 1.85rem;
         }
 
         .dish-card {
-          background: rgba(16, 24, 39, 0.6);
-          border: 1px solid rgba(200, 168, 120, 0.25);
-          border-radius: 12px;
+          background: linear-gradient(145deg, rgba(23, 36, 59, 0.65) 0%, rgba(16, 24, 39, 0.82) 100%);
+          backdrop-filter: blur(18px);
+          -webkit-backdrop-filter: blur(18px);
+          border: 1px solid rgba(200, 168, 120, 0.28);
+          border-radius: 16px;
           overflow: hidden;
           display: flex;
           flex-direction: column;
-          transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           position: relative;
+          box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(232, 223, 208, 0.15);
+        }
+
+        .dish-card::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(232, 223, 208, 0.3), transparent);
+          pointer-events: none;
         }
 
         .dish-card:hover {
-          transform: translateY(-5px);
+          transform: translateY(-6px);
           border-color: var(--color-gold);
-          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(200, 168, 120, 0.12);
+          box-shadow: 0 22px 48px rgba(0, 0, 0, 0.85), 0 0 28px rgba(200, 168, 120, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.22);
         }
 
         .dish-image-wrapper {
@@ -308,24 +326,25 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
 
         .dish-category-badge {
           position: absolute;
-          top: 12px;
-          left: 12px;
+          top: 14px;
+          left: 14px;
           font-family: var(--font-sans);
           font-size: 0.625rem;
           font-weight: 600;
           letter-spacing: 0.15em;
           text-transform: uppercase;
-          color: var(--color-ivory);
-          background: rgba(16, 24, 39, 0.75);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          padding: 0.25rem 0.65rem;
+          color: var(--color-gold);
+          background: rgba(16, 24, 39, 0.85);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          padding: 0.3rem 0.75rem;
           border-radius: var(--radius-pill);
-          border: 1px solid rgba(232, 223, 208, 0.2);
+          border: 1px solid rgba(200, 168, 120, 0.35);
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
         }
 
         .dish-content {
-          padding: 1.5rem;
+          padding: 1.65rem;
           display: flex;
           flex-direction: column;
           flex: 1;
@@ -356,7 +375,7 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
 
         .dish-price {
           font-family: var(--font-serif);
-          font-size: 1.25rem;
+          font-size: 1.3rem;
           font-weight: 600;
           color: var(--color-gold);
         }
@@ -380,21 +399,23 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
         .dish-pairing-note {
           display: flex;
           align-items: center;
-          gap: 0.4rem;
-          font-size: 0.6875rem;
+          gap: 0.5rem;
+          font-size: 0.725rem;
           color: var(--color-gold);
           font-style: italic;
-          margin-bottom: 1rem;
-          padding-top: 0.75rem;
-          border-top: 1px dashed rgba(232, 223, 208, 0.1);
+          margin-bottom: 1.15rem;
+          padding: 0.55rem 0.85rem;
+          border-radius: 8px;
+          background: rgba(200, 168, 120, 0.08);
+          border: 1px dashed rgba(200, 168, 120, 0.3);
         }
 
         .dish-footer-row {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding-top: 0.75rem;
-          border-top: 1px solid rgba(232, 223, 208, 0.1);
+          padding-top: 0.85rem;
+          border-top: 1px solid rgba(232, 223, 208, 0.12);
         }
 
         .dish-tags {
@@ -514,6 +535,21 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
             grid-template-columns: 1fr;
             max-width: 440px;
             margin: 0 auto;
+            gap: 1.5rem;
+          }
+          .dish-card {
+            border-radius: 14px;
+          }
+          .dish-content {
+            padding: 1.35rem;
+          }
+          .menu-filter-bar {
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+          }
+          .filter-pill {
+            padding: 0.5rem 1rem;
+            font-size: 0.6875rem;
           }
           .dish-modal-card {
             grid-template-columns: 1fr;

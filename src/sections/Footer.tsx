@@ -291,7 +291,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
         .footer-contacts {
           display: flex;
           align-items: center;
-          gap: 2.5rem;
+          gap: 1.5rem;
           flex-wrap: wrap;
         }
 
@@ -299,6 +299,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
           display: flex;
           align-items: flex-start;
           gap: 0.75rem;
+          background: rgba(23, 36, 59, 0.45);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(200, 168, 120, 0.2);
+          border-radius: 10px;
+          padding: 0.75rem 1.15rem;
+          transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .contact-col:hover {
+          border-color: rgba(200, 168, 120, 0.5);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
         }
 
         .col-icon {
@@ -312,7 +325,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
           font-family: var(--font-sans);
           font-size: 0.8125rem;
           color: var(--color-ivory);
-          font-weight: 400;
+          font-weight: 500;
         }
 
         .contact-desc {
@@ -370,7 +383,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
           .footer-top-row {
             flex-direction: column;
             align-items: flex-start;
-            gap: 1.5rem;
+            gap: 1.75rem;
           }
           .footer-nav-bar {
             flex-wrap: wrap;
@@ -379,11 +392,28 @@ export const Footer: React.FC<FooterProps> = ({ onOpenLegalDoc }) => {
           .footer-middle-row {
             flex-direction: column;
             align-items: flex-start;
+            gap: 1.75rem;
           }
           .footer-contacts {
+            display: grid;
+            grid-template-columns: 1fr;
+            width: 100%;
+            gap: 0.85rem;
+          }
+          .contact-col {
+            width: 100%;
+            box-sizing: border-box;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .footer-bottom-row {
             flex-direction: column;
             align-items: flex-start;
             gap: 1.25rem;
+          }
+          .footer-legal-bar {
+            gap: 0.5rem 0.85rem;
           }
         }
       `}</style>

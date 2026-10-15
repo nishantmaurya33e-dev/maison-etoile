@@ -69,7 +69,17 @@
   --transition-normal: 280ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 450ms cubic-bezier(0.16, 1, 0.3, 1);
 
+  /* Extended Glassmorphism System */
+  --glass-card-bg: linear-gradient(145deg, rgba(23, 36, 59, 0.65) 0%, rgba(16, 24, 39, 0.78) 100%);
+  --glass-card-border: rgba(200, 168, 120, 0.28);
+  --glass-card-border-light: rgba(232, 223, 208, 0.2);
+  --glass-card-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(232, 223, 208, 0.18);
+  --glass-card-hover-border: rgba(200, 168, 120, 0.65);
+  --glass-card-hover-shadow: 0 20px 45px -8px rgba(0, 0, 0, 0.8), 0 0 25px rgba(200, 168, 120, 0.22), inset 0 1px 2px 0 rgba(232, 223, 208, 0.25);
+  --glass-inner-bevel: inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
+
   /* Blur */
   --blur-glass: 14px;
+  --blur-glass-deep: 24px;
   --blur-nav: 18px;
 }

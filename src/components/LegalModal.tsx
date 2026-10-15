@@ -167,40 +167,54 @@ export const LegalModal: React.FC<LegalModalProps> = ({ activeDoc, onClose }) =>
         .legal-modal-backdrop {
           position: fixed;
           inset: 0;
-          background: rgba(10, 15, 25, 0.9);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
+          background: rgba(10, 15, 25, 0.92);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
           z-index: 300;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 1.5rem;
+          animation: subtleFadeIn 0.3s ease;
         }
 
         .legal-modal-sheet {
-          background: #17243B;
+          background: linear-gradient(165deg, rgba(23, 36, 59, 0.94) 0%, rgba(16, 24, 39, 0.98) 100%);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
           border: 1px solid var(--color-gold);
-          border-radius: 12px;
+          border-radius: 16px;
           max-width: 680px;
           width: 100%;
           max-height: 85vh;
           overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
           padding: 2.75rem;
           position: relative;
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+          box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(200, 168, 120, 0.2);
           color: var(--color-ivory);
         }
 
         .legal-close-btn {
           position: absolute;
-          top: 20px;
-          right: 20px;
+          top: 18px;
+          right: 18px;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: rgba(23, 36, 59, 0.7);
+          border: 1px solid rgba(200, 168, 120, 0.3);
           color: var(--color-silver);
-          padding: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all var(--transition-fast);
         }
 
         .legal-close-btn:hover {
           color: #FFFFFF;
+          border-color: var(--color-gold);
+          background: rgba(200, 168, 120, 0.2);
         }
 
         .doc-badge {
@@ -235,9 +249,12 @@ export const LegalModal: React.FC<LegalModalProps> = ({ activeDoc, onClose }) =>
         }
 
         .doc-disclaimer {
-          background: rgba(16, 24, 39, 0.6);
+          background: rgba(16, 24, 39, 0.65);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border-left: 3px solid var(--color-gold);
-          padding: 0.75rem 1rem;
+          border-radius: 0 8px 8px 0;
+          padding: 0.85rem 1.15rem;
           font-size: 0.8125rem !important;
           color: var(--color-silver) !important;
           margin-bottom: 1.5rem !important;
@@ -245,7 +262,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ activeDoc, onClose }) =>
 
         @media (max-width: 600px) {
           .legal-modal-sheet {
-            padding: 1.5rem;
+            padding: 2rem 1.25rem;
           }
         }
       `}</style>

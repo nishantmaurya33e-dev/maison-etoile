@@ -159,7 +159,7 @@ export const DiningExperience: React.FC = () => {
       <style>{`
         .experience-layout {
           display: grid;
-          grid-template-columns: 0.8fr 1.2fr;
+          grid-template-columns: 0.85fr 1.15fr;
           gap: 4rem;
           align-items: center;
         }
@@ -170,10 +170,10 @@ export const DiningExperience: React.FC = () => {
 
         .experience-image-inner {
           position: relative;
-          border-radius: 12px;
+          border-radius: 16px;
           overflow: hidden;
           border: 1px solid rgba(200, 168, 120, 0.35);
-          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+          box-shadow: 0 25px 55px rgba(0, 0, 0, 0.7), 0 0 30px rgba(200, 168, 120, 0.12);
         }
 
         .exp-img {
@@ -182,33 +182,44 @@ export const DiningExperience: React.FC = () => {
           aspect-ratio: 4 / 3;
           object-fit: cover;
           display: block;
+          transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .experience-image-card:hover .exp-img {
+          transform: scale(1.04);
         }
 
         .exp-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, transparent 40%, rgba(16, 24, 39, 0.92) 100%);
+          background: linear-gradient(180deg, transparent 35%, rgba(16, 24, 39, 0.92) 100%);
+          backdrop-filter: blur(2px);
+          -webkit-backdrop-filter: blur(2px);
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
-          padding: 1.75rem;
+          padding: 2rem;
         }
 
         .exp-pill {
           font-family: var(--font-sans);
           font-size: 0.6875rem;
-          letter-spacing: 0.22em;
+          font-weight: 600;
+          letter-spacing: 0.24em;
           color: var(--color-gold);
           text-transform: uppercase;
-          margin-bottom: 0.4rem;
+          margin-bottom: 0.5rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
         }
 
         .exp-quote {
           font-family: var(--font-serif);
-          font-size: 1.05rem;
+          font-size: 1.15rem;
           font-style: italic;
           color: var(--color-ivory);
-          line-height: 1.45;
+          line-height: 1.5;
         }
 
         .experience-heading {
@@ -221,7 +232,7 @@ export const DiningExperience: React.FC = () => {
         .experience-intro {
           font-size: 1rem;
           color: var(--color-ivory-dim);
-          line-height: 1.75;
+          line-height: 1.8;
           margin-bottom: 2.5rem;
           max-width: 640px;
         }
@@ -229,33 +240,54 @@ export const DiningExperience: React.FC = () => {
         .pillars-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 1.5rem;
-          padding-top: 2rem;
-          border-top: 1px solid rgba(232, 223, 208, 0.12);
+          gap: 1.25rem;
+          padding-top: 1.5rem;
+          border-top: 1px solid rgba(200, 168, 120, 0.2);
         }
 
         .pillar-item {
           display: flex;
           flex-direction: column;
+          background: linear-gradient(145deg, rgba(23, 36, 59, 0.65) 0%, rgba(16, 24, 39, 0.8) 100%);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border: 1px solid rgba(200, 168, 120, 0.22);
+          border-radius: 14px;
+          padding: 1.75rem 1.35rem;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(232, 223, 208, 0.1);
+          transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+        }
+
+        .pillar-item:hover {
+          transform: translateY(-5px);
+          border-color: rgba(200, 168, 120, 0.55);
+          box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65), 0 0 24px rgba(200, 168, 120, 0.2);
         }
 
         .pillar-icon-box {
-          width: 44px;
-          height: 44px;
+          width: 48px;
+          height: 48px;
           border-radius: 50%;
-          background: rgba(23, 36, 59, 0.6);
-          border: 1px solid rgba(200, 168, 120, 0.3);
+          background: linear-gradient(135deg, rgba(200, 168, 120, 0.18) 0%, rgba(23, 36, 59, 0.85) 100%);
+          border: 1px solid rgba(200, 168, 120, 0.38);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.15);
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-bottom: 1rem;
+          margin-bottom: 1.15rem;
+          transition: transform var(--transition-fast), border-color var(--transition-fast);
+        }
+
+        .pillar-item:hover .pillar-icon-box {
+          transform: scale(1.08);
+          border-color: var(--color-gold);
         }
 
         .pillar-title {
           font-family: var(--font-sans);
           font-size: 0.875rem;
           font-weight: 600;
-          letter-spacing: 0.12em;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--color-ivory);
           margin-bottom: 0.5rem;
@@ -264,62 +296,83 @@ export const DiningExperience: React.FC = () => {
         .pillar-desc {
           font-size: 0.8125rem;
           color: var(--color-silver);
-          line-height: 1.6;
-          margin-bottom: 1rem;
+          line-height: 1.65;
+          margin-bottom: 1.25rem;
           flex: 1;
         }
 
         .pillar-link {
           display: inline-flex;
           align-items: center;
-          gap: 0.4rem;
+          gap: 0.45rem;
           font-size: 0.6875rem;
           font-weight: 600;
-          letter-spacing: 0.15em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--color-gold);
-          transition: gap var(--transition-fast), color var(--transition-fast);
+          background: rgba(200, 168, 120, 0.08);
+          border: 1px solid rgba(200, 168, 120, 0.25);
+          border-radius: 20px;
+          padding: 0.45rem 0.95rem;
+          align-self: flex-start;
+          transition: all var(--transition-fast);
         }
 
         .pillar-link:hover {
-          gap: 0.65rem;
-          color: #FFFFFF;
+          gap: 0.7rem;
+          background: var(--color-gold);
+          color: #101827;
+          border-color: var(--color-gold);
+          box-shadow: 0 4px 14px rgba(200, 168, 120, 0.35);
         }
 
         .pillar-modal-overlay {
           position: fixed;
           inset: 0;
-          background: rgba(16, 24, 39, 0.85);
-          backdrop-filter: blur(14px);
-          -webkit-backdrop-filter: blur(14px);
+          background: rgba(10, 15, 25, 0.9);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
           z-index: 150;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 1.5rem;
+          animation: subtleFadeIn 0.3s ease;
         }
 
         .pillar-modal-card {
-          background: #17243B;
+          background: linear-gradient(165deg, rgba(23, 36, 59, 0.92) 0%, rgba(16, 24, 39, 0.96) 100%);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
           border: 1px solid var(--color-gold);
-          border-radius: 12px;
-          padding: 2.5rem;
-          max-width: 520px;
+          border-radius: 16px;
+          padding: 2.75rem;
+          max-width: 540px;
           width: 100%;
           position: relative;
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+          box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 30px rgba(200, 168, 120, 0.2);
         }
 
         .modal-close-btn {
           position: absolute;
           top: 18px;
           right: 18px;
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: rgba(23, 36, 59, 0.7);
+          border: 1px solid rgba(200, 168, 120, 0.3);
           color: var(--color-silver);
-          padding: 4px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all var(--transition-fast);
         }
 
         .modal-close-btn:hover {
           color: #FFFFFF;
+          border-color: var(--color-gold);
+          background: rgba(200, 168, 120, 0.2);
         }
 
         @media (max-width: 991px) {
@@ -328,8 +381,21 @@ export const DiningExperience: React.FC = () => {
             gap: 3rem;
           }
           .pillars-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+          }
+        }
+
+        @media (max-width: 600px) {
+          .pillars-grid {
             grid-template-columns: 1fr;
-            gap: 2rem;
+            gap: 1.25rem;
+          }
+          .pillar-item {
+            padding: 1.5rem;
+          }
+          .pillar-modal-card {
+            padding: 2rem 1.5rem;
           }
         }
       `}</style>

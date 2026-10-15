@@ -225,12 +225,13 @@ export const Gallery: React.FC = () => {
 
         .gallery-card {
           position: relative;
-          border-radius: 10px;
+          border-radius: 14px;
           overflow: hidden;
           background: #0d131f;
           border: 1px solid rgba(200, 168, 120, 0.25);
           cursor: pointer;
           aspect-ratio: 16 / 10;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
@@ -240,18 +241,18 @@ export const Gallery: React.FC = () => {
           border: 1px solid rgba(232, 223, 208, 0.12);
           pointer-events: none;
           z-index: 2;
-          border-radius: 6px;
+          border-radius: 8px;
           transition: border-color 0.3s ease;
         }
 
         .gallery-card:hover .gallery-inner-border {
-          border-color: rgba(200, 168, 120, 0.35);
+          border-color: rgba(200, 168, 120, 0.4);
         }
 
         .gallery-card:hover, .gallery-card:focus-visible {
           transform: translateY(-5px);
           border-color: var(--color-gold);
-          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.65), 0 0 25px rgba(200, 168, 120, 0.18);
+          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(200, 168, 120, 0.25);
         }
 
         .gallery-thumb {
@@ -259,7 +260,7 @@ export const Gallery: React.FC = () => {
           height: 100%;
           object-fit: cover;
           display: block;
-          transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .gallery-card:hover .gallery-thumb {
@@ -269,12 +270,12 @@ export const Gallery: React.FC = () => {
         .gallery-card-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, transparent 35%, rgba(16, 24, 39, 0.95) 100%);
+          background: linear-gradient(180deg, transparent 30%, rgba(16, 24, 39, 0.95) 100%);
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          padding: 1.5rem;
-          opacity: 0.9;
+          padding: 1.25rem;
+          opacity: 0.92;
           transition: opacity 0.3s ease;
           z-index: 3;
         }
@@ -285,10 +286,12 @@ export const Gallery: React.FC = () => {
 
         .gallery-hover-icon {
           align-self: flex-end;
-          width: 36px;
-          height: 36px;
+          width: 38px;
+          height: 38px;
           border-radius: 50%;
-          background: rgba(23, 36, 59, 0.75);
+          background: rgba(23, 36, 59, 0.85);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border: 1px solid var(--color-gold-border);
           display: flex;
           align-items: center;
@@ -296,6 +299,7 @@ export const Gallery: React.FC = () => {
           color: var(--color-gold);
           opacity: 0;
           transform: scale(0.85);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
           transition: all 0.25s ease;
         }
 
@@ -304,9 +308,19 @@ export const Gallery: React.FC = () => {
           transform: scale(1);
         }
 
+        .gallery-caption-box {
+          background: rgba(23, 36, 59, 0.75);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(200, 168, 120, 0.22);
+          border-radius: 10px;
+          padding: 0.85rem 1rem;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(232, 223, 208, 0.1);
+        }
+
         .gallery-item-title {
           font-family: var(--font-serif);
-          font-size: 1.25rem;
+          font-size: 1.2rem;
           color: var(--color-ivory);
           margin-bottom: 0.25rem;
         }
@@ -343,7 +357,9 @@ export const Gallery: React.FC = () => {
           width: 44px;
           height: 44px;
           border-radius: 50%;
-          background: rgba(23, 36, 59, 0.75);
+          background: rgba(23, 36, 59, 0.85);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
           border: 1px solid var(--color-gold-border);
           color: var(--color-ivory);
           display: flex;
@@ -366,7 +382,9 @@ export const Gallery: React.FC = () => {
           width: 50px;
           height: 50px;
           border-radius: 50%;
-          background: rgba(23, 36, 59, 0.8);
+          background: rgba(23, 36, 59, 0.85);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
           border: 1px solid var(--color-gold-border);
           color: var(--color-ivory);
           display: flex;
@@ -394,15 +412,15 @@ export const Gallery: React.FC = () => {
         }
 
         .lightbox-img-frame {
-          max-height: 70vh;
-          border-radius: 10px;
+          max-height: 68vh;
+          border-radius: 14px;
           overflow: hidden;
           border: 1px solid rgba(200, 168, 120, 0.4);
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+          box-shadow: 0 25px 65px rgba(0, 0, 0, 0.85), 0 0 30px rgba(200, 168, 120, 0.15);
         }
 
         .lightbox-current-img {
-          max-height: 70vh;
+          max-height: 68vh;
           width: auto;
           max-width: 100%;
           object-fit: contain;
@@ -413,6 +431,13 @@ export const Gallery: React.FC = () => {
           text-align: center;
           margin-top: 1.25rem;
           max-width: 680px;
+          background: rgba(23, 36, 59, 0.8);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(200, 168, 120, 0.3);
+          border-radius: 12px;
+          padding: 1.25rem 2rem;
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
         }
 
         .lightbox-counter {
@@ -446,12 +471,30 @@ export const Gallery: React.FC = () => {
           .gallery-header-row {
             flex-direction: column;
             align-items: flex-start;
+            gap: 1.25rem;
           }
           .gallery-editorial-grid {
             grid-template-columns: 1fr;
+            gap: 1.25rem;
+          }
+          .gallery-card {
+            aspect-ratio: 4 / 3;
+          }
+          .gallery-card-overlay {
+            opacity: 1;
+          }
+          .gallery-hover-icon {
+            opacity: 1;
+            transform: scale(1);
+          }
+          .lightbox-backdrop {
+            padding: 1rem;
           }
           .lightbox-nav-btn {
             display: none;
+          }
+          .lightbox-info-bar {
+            padding: 1rem 1.25rem;
           }
         }
       `}</style>

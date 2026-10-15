@@ -485,20 +485,24 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
         }
 
         .reservation-wrapper {
-          max-width: 840px;
+          max-width: 860px;
           margin: 0 auto;
-          background: rgba(16, 24, 39, 0.75);
+          background: linear-gradient(165deg, rgba(23, 36, 59, 0.72) 0%, rgba(16, 24, 39, 0.88) 100%);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
           border: 1px solid rgba(200, 168, 120, 0.35);
-          border-radius: 14px;
-          padding: 2.75rem;
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+          border-radius: 18px;
+          padding: 3.25rem 3rem;
+          box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 0 0 35px rgba(200, 168, 120, 0.12), inset 0 1px 0 rgba(232, 223, 208, 0.15);
         }
 
         .demo-notice-bar {
-          background: rgba(200, 168, 120, 0.08);
+          background: linear-gradient(135deg, rgba(200, 168, 120, 0.1) 0%, rgba(23, 36, 59, 0.5) 100%);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           border: 1px solid rgba(200, 168, 120, 0.3);
-          border-radius: 8px;
-          padding: 1rem 1.25rem;
+          border-radius: 12px;
+          padding: 1.15rem 1.35rem;
           display: flex;
           align-items: flex-start;
           gap: 0.85rem;
@@ -506,6 +510,7 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
           font-size: 0.8125rem;
           line-height: 1.5;
           color: var(--color-ivory);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
         }
 
         .demo-notice-bar strong {
@@ -524,7 +529,7 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
         .form-group {
           display: flex;
           flex-direction: column;
-          gap: 0.4rem;
+          gap: 0.45rem;
         }
 
         .form-label {
@@ -549,30 +554,38 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
           left: 14px;
           top: 50%;
           transform: translateY(-50%);
-          color: var(--color-silver);
+          color: var(--color-gold);
+          opacity: 0.75;
           pointer-events: none;
         }
 
         .form-input {
           width: 100%;
-          padding: 0.85rem 1rem;
-          border-radius: 6px;
-          background: rgba(23, 36, 59, 0.5);
-          border: 1px solid rgba(232, 223, 208, 0.2);
+          padding: 0.95rem 1.15rem;
+          border-radius: 8px;
+          background: rgba(16, 24, 39, 0.6);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(200, 168, 120, 0.25);
           color: var(--color-ivory);
           font-family: var(--font-sans);
-          font-size: 0.875rem;
-          transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+          font-size: 16px;
+          transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
         }
 
         .form-input.has-icon {
-          padding-left: 2.6rem;
+          padding-left: 2.75rem;
+        }
+
+        .form-input:hover {
+          border-color: rgba(200, 168, 120, 0.45);
         }
 
         .form-input:focus {
           border-color: var(--color-gold);
+          background: rgba(23, 36, 59, 0.75);
           outline: none;
-          box-shadow: 0 0 10px rgba(200, 168, 120, 0.2);
+          box-shadow: 0 0 16px rgba(200, 168, 120, 0.25);
         }
 
         .form-input.has-error {
@@ -611,15 +624,16 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
         }
 
         .confirmation-icon-circle {
-          width: 64px;
-          height: 64px;
+          width: 68px;
+          height: 68px;
           border-radius: 50%;
-          background: rgba(200, 168, 120, 0.12);
+          background: linear-gradient(135deg, rgba(200, 168, 120, 0.2) 0%, rgba(23, 36, 59, 0.8) 100%);
           border: 1px solid var(--color-gold);
           display: flex;
           align-items: center;
           justify-content: center;
           margin: 0 auto 1.5rem;
+          box-shadow: 0 0 25px rgba(200, 168, 120, 0.3);
         }
 
         .confirmation-title {
@@ -635,16 +649,19 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
         }
 
         .confirmation-details-box {
-          background: rgba(23, 36, 59, 0.5);
-          border: 1px solid rgba(200, 168, 120, 0.25);
-          border-radius: 8px;
-          padding: 1.5rem;
+          background: linear-gradient(145deg, rgba(23, 36, 59, 0.7) 0%, rgba(16, 24, 39, 0.85) 100%);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
+          border: 1px solid rgba(200, 168, 120, 0.3);
+          border-radius: 12px;
+          padding: 1.75rem;
           max-width: 480px;
           margin: 0 auto 2rem;
           display: flex;
           flex-direction: column;
           gap: 0.85rem;
           text-align: left;
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(232, 223, 208, 0.1);
         }
 
         .detail-row {
@@ -674,9 +691,12 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
           gap: 0.75rem;
           max-width: 580px;
           margin: 0 auto;
-          background: rgba(16, 24, 39, 0.5);
+          background: rgba(16, 24, 39, 0.65);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
           border-left: 3px solid var(--color-gold);
-          padding: 0.75rem 1rem;
+          border-radius: 0 8px 8px 0;
+          padding: 0.85rem 1.15rem;
           font-size: 0.75rem;
           color: var(--color-silver);
           text-align: left;
@@ -685,10 +705,15 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({ initialD
 
         @media (max-width: 768px) {
           .reservation-wrapper {
-            padding: 1.5rem;
+            padding: 2rem 1.35rem;
+            border-radius: 14px;
           }
           .form-grid {
             grid-template-columns: 1fr;
+            gap: 1.25rem;
+          }
+          .btn-glass-primary {
+            width: 100%;
           }
         }
       `}</style>
