@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrandMark } from './BrandMark';
-import { Menu, X, Calendar } from 'lucide-react';
+import { Menu, X, Calendar, ChevronRight, Sparkles, MapPin, Clock } from 'lucide-react';
 
 interface NavbarProps {
   onOpenReservationModal?: () => void;
@@ -39,12 +39,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { label: 'ACCUEIL', href: '#hero' },
-    { label: 'NOTRE HISTOIRE', href: '#our-story' },
-    { label: 'LE MENU', href: '#menu' },
-    { label: 'EXPÉRIENCE', href: '#experience' },
-    { label: 'GALERIE', href: '#gallery' },
-    { label: 'CONTACT', href: '#contact' },
+    { label: 'ACCUEIL', href: '#hero', num: '01', desc: 'Salon & Bienvenue' },
+    { label: 'NOTRE HISTOIRE', href: '#our-story', num: '02', desc: 'Tradition & Vision' },
+    { label: 'LE MENU', href: '#menu', num: '03', desc: 'Haute Gastronomie' },
+    { label: 'EXPÉRIENCE', href: '#experience', num: '04', desc: 'Grands Crus & Salons' },
+    { label: 'GALERIE', href: '#gallery', num: '05', desc: 'Instants Précieux' },
+    { label: 'CONTACT', href: '#contact', num: '06', desc: 'Accès & Réservation' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -140,36 +140,55 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
         aria-modal="true"
         aria-label="Menu mobile Maison Étoile"
         className={`mobile-drawer-overlay ${mobileMenuOpen ? 'is-open' : ''}`}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) setMobileMenuOpen(false);
+        }}
       >
-        {/* Explicit Close Button inside Drawer */}
-        <button
-          type="button"
-          onClick={() => setMobileMenuOpen(false)}
-          className="drawer-close-btn"
-          aria-label="Fermer le menu"
-        >
-          <X size={24} />
-        </button>
+        <div className="mobile-drawer-card">
+          {/* Explicit Close Button inside Drawer */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(false)}
+            className="drawer-close-btn"
+            aria-label="Fermer le menu"
+          >
+            <X size={18} />
+          </button>
 
-        <div className="drawer-inner-content">
-          <BrandMark subtitle="L'art de savourer l'instant" />
-          
-          <div className="drawer-divider" aria-hidden="true" />
+          {/* Drawer Brand Header */}
+          <div className="drawer-header-brand">
+            <BrandMark subtitle="HAUTE GASTRONOMIE • PARIS" variant="compact" />
+          </div>
 
-          <nav className="mobile-nav-list" aria-label="Liens mobiles">
+          <div className="drawer-ornament-line" aria-hidden="true">
+            <span className="drawer-ornament-star">✦</span>
+          </div>
+
+          {/* Mobile Navigation Links as Frosted Glass Capsules */}
+          <nav className="mobile-nav-list" aria-label="Navigation mobile">
             {navLinks.map((link, idx) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
                 className="mobile-nav-item"
-                style={{ animationDelay: `${0.05 * (idx + 1)}s` }}
+                style={{ animationDelay: `${0.04 * (idx + 1)}s` }}
               >
-                {link.label}
+                <div className="nav-item-left">
+                  <span className="nav-item-num">{link.num}</span>
+                  <div className="nav-item-text">
+                    <span className="nav-item-title">{link.label}</span>
+                    <span className="nav-item-desc">{link.desc}</span>
+                  </div>
+                </div>
+                <div className="nav-item-arrow" aria-hidden="true">
+                  <ChevronRight size={15} />
+                </div>
               </a>
             ))}
           </nav>
 
+          {/* CTA Reservation Button */}
           <a
             href="#reservations"
             onClick={(e) => {
@@ -183,8 +202,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
             }}
             className="btn-glass-primary mobile-drawer-reserve-btn"
           >
+            <Sparkles size={14} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
             <span>RÉSERVER UNE TABLE</span>
           </a>
+
+          {/* Drawer Footer Details */}
+          <div className="drawer-footer-details">
+            <div className="drawer-footer-item">
+              <MapPin size={12} className="drawer-footer-icon" aria-hidden="true" />
+              <span>8 Place de la Concorde, 75008 Paris</span>
+            </div>
+            <div className="drawer-footer-item">
+              <Clock size={12} className="drawer-footer-icon" aria-hidden="true" />
+              <span>Services : 12h00 - 14h30 & 19h30 - 23h30</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -315,7 +347,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           right: 0;
           bottom: 0;
           z-index: 150;
-          background-color: rgba(10, 15, 25, 0.98);
+          background: radial-gradient(circle at 50% 18%, rgba(200, 168, 120, 0.14) 0%, rgba(16, 24, 39, 0.9) 55%, rgba(10, 15, 25, 0.98) 100%);
           backdrop-filter: blur(28px);
           -webkit-backdrop-filter: blur(28px);
           overflow-y: auto;
@@ -323,86 +355,206 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 3.5rem 1.5rem;
+          padding: 1.5rem 1rem;
           opacity: 0;
           pointer-events: none;
-          transform: translateY(-15px);
-          transition: opacity 0.35s ease, transform 0.35s ease;
+          transition: opacity 0.35s ease, backdrop-filter 0.35s ease;
         }
 
         .mobile-drawer-overlay.is-open {
           opacity: 1;
           pointer-events: all;
-          transform: translateY(0);
+        }
+
+        /* Frosted Glass Container Card */
+        .mobile-drawer-card {
+          position: relative;
+          width: 100%;
+          max-width: 420px;
+          margin: auto;
+          background: linear-gradient(165deg, rgba(23, 36, 59, 0.8) 0%, rgba(16, 24, 39, 0.92) 100%);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(200, 168, 120, 0.35);
+          border-radius: 20px;
+          padding: 2.25rem 1.35rem 1.65rem;
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(200, 168, 120, 0.15), inset 0 1px 0 rgba(232, 223, 208, 0.2);
+          transform: translateY(20px) scale(0.97);
+          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-drawer-overlay.is-open .mobile-drawer-card {
+          transform: translateY(0) scale(1);
         }
 
         .drawer-close-btn {
           position: absolute;
-          top: 20px;
-          right: 20px;
-          width: 44px;
-          height: 44px;
+          top: 16px;
+          right: 16px;
+          width: 38px;
+          height: 38px;
           border-radius: 50%;
-          background: rgba(23, 36, 59, 0.8);
-          border: 1px solid var(--color-gold-border);
-          color: var(--color-ivory);
+          background: rgba(23, 36, 59, 0.7);
+          border: 1px solid rgba(200, 168, 120, 0.3);
+          color: var(--color-silver);
           display: flex;
           align-items: center;
           justify-content: center;
           transition: all var(--transition-fast);
+          cursor: pointer;
         }
 
-        .drawer-close-btn:hover {
+        .drawer-close-btn:hover, .drawer-close-btn:focus-visible {
           color: #fff;
           border-color: var(--color-gold);
+          background: rgba(200, 168, 120, 0.25);
+          box-shadow: 0 0 15px rgba(200, 168, 120, 0.3);
+          transform: scale(1.05);
         }
 
-        .drawer-inner-content {
+        .drawer-header-brand {
           display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          gap: 1.5rem;
-          max-width: 340px;
-          width: 100%;
-          margin: auto;
+          justify-content: center;
+          margin-bottom: 0.75rem;
         }
 
-        .drawer-divider {
-          width: 70px;
+        .drawer-ornament-line {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          margin: 0 auto 1.25rem;
+          width: 80%;
+        }
+
+        .drawer-ornament-line::before, .drawer-ornament-line::after {
+          content: '';
+          flex: 1;
           height: 1px;
-          background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
-          margin: 0.25rem 0;
+          background: linear-gradient(90deg, transparent, rgba(200, 168, 120, 0.4), transparent);
+        }
+
+        .drawer-ornament-star {
+          color: var(--color-gold);
+          font-size: 0.75rem;
+          padding: 0 0.65rem;
         }
 
         .mobile-nav-list {
           display: flex;
           flex-direction: column;
-          align-items: center;
-          gap: 1.15rem;
+          gap: 0.65rem;
           width: 100%;
+          margin-bottom: 1.25rem;
         }
 
         .mobile-nav-item {
-          font-family: var(--font-serif);
-          font-size: 1.35rem;
-          letter-spacing: 0.12em;
-          color: var(--color-ivory);
-          padding: 0.35rem 1rem;
-          display: block;
-          transition: color var(--transition-fast), transform var(--transition-fast);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.75rem 1rem;
+          background: rgba(23, 36, 59, 0.5);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(200, 168, 120, 0.18);
+          border-radius: 12px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(232, 223, 208, 0.08);
+          text-decoration: none;
+          transition: all 0.22s ease;
         }
 
         .mobile-nav-item:hover, .mobile-nav-item:active {
+          background: linear-gradient(90deg, rgba(200, 168, 120, 0.18) 0%, rgba(23, 36, 59, 0.75) 100%);
+          border-color: var(--color-gold);
+          transform: translateX(3px);
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 16px rgba(200, 168, 120, 0.22);
+        }
+
+        .nav-item-left {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+          text-align: left;
+        }
+
+        .nav-item-num {
+          font-family: var(--font-sans);
+          font-size: 0.6875rem;
+          font-weight: 600;
+          letter-spacing: 0.16em;
           color: var(--color-gold);
-          transform: translateY(-2px);
+          opacity: 0.85;
+          min-width: 18px;
+        }
+
+        .nav-item-text {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+        }
+
+        .nav-item-title {
+          font-family: var(--font-serif);
+          font-size: 1.05rem;
+          letter-spacing: 0.1em;
+          color: var(--color-ivory);
+          font-weight: 500;
+        }
+
+        .nav-item-desc {
+          font-family: var(--font-sans);
+          font-size: 0.65rem;
+          letter-spacing: 0.08em;
+          color: var(--color-silver);
+        }
+
+        .nav-item-arrow {
+          color: var(--color-gold);
+          opacity: 0.6;
+          display: flex;
+          align-items: center;
+          transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .mobile-nav-item:hover .nav-item-arrow {
+          opacity: 1;
+          transform: translateX(3px);
         }
 
         .mobile-drawer-reserve-btn {
           width: 100%;
-          max-width: 260px;
-          height: 52px;
-          margin-top: 0.75rem;
+          height: 48px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          font-size: 0.75rem;
+          letter-spacing: 0.16em;
+          margin-bottom: 1.25rem;
+          box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 18px rgba(200, 168, 120, 0.25);
+        }
+
+        .drawer-footer-details {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.35rem;
+          padding-top: 0.85rem;
+          border-top: 1px solid rgba(200, 168, 120, 0.15);
+          font-size: 0.6875rem;
+          font-family: var(--font-sans);
+          color: var(--color-silver);
+        }
+
+        .drawer-footer-item {
+          display: flex;
+          align-items: center;
+          gap: 0.45rem;
+        }
+
+        .drawer-footer-icon {
+          color: var(--color-gold);
+          flex-shrink: 0;
         }
 
         @media (min-width: 992px) {
