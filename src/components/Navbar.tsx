@@ -9,12 +9,27 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
+
+      // Determine active section for desktop nav underline indicator (matching Image 2)
+      const sectionIds = ['hero', 'our-story', 'menu', 'experience', 'gallery', 'contact'];
+      const scrollPos = window.scrollY + 140;
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActiveSection(sectionIds[i]);
+          break;
+        }
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -39,12 +54,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { label: 'ACCUEIL', href: '#hero', num: '01', desc: 'Salon & Bienvenue' },
-    { label: 'NOTRE HISTOIRE', href: '#our-story', num: '02', desc: 'Tradition & Vision' },
-    { label: 'LE MENU', href: '#menu', num: '03', desc: 'Haute Gastronomie' },
-    { label: 'EXPÉRIENCE', href: '#experience', num: '04', desc: 'Grands Crus & Salons' },
-    { label: 'GALERIE', href: '#gallery', num: '05', desc: 'Instants Précieux' },
-    { label: 'CONTACT', href: '#contact', num: '06', desc: 'Accès & Réservation' },
+    { id: 'hero', label: 'ACCUEIL', href: '#hero', num: '01', desc: 'Salon & Bienvenue' },
+    { id: 'our-story', label: 'NOTRE HISTOIRE', href: '#our-story', num: '02', desc: 'Tradition & Vision' },
+    { id: 'menu', label: 'LE MENU', href: '#menu', num: '03', desc: 'Haute Gastronomie' },
+    { id: 'experience', label: 'EXPÉRIENCE', href: '#experience', num: '04', desc: 'Grands Crus & Salons' },
+    { id: 'gallery', label: 'GALERIE', href: '#gallery', num: '05', desc: 'Instants Précieux' },
+    { id: 'contact', label: 'CONTACT', href: '#contact', num: '06', desc: 'Accès & Réservation' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -58,11 +73,71 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
 
   return (
     <>
+      {/* Decorative Celestial Arc with 8-Point Gold Star (Image 2 Signature Motif) */}
+      <div className="celestial-arc-bg" aria-hidden="true">
+        <svg
+          className="celestial-arc-svg"
+          viewBox="0 0 1200 160"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Subtle curved orbital arc */}
+          <path
+            d="M 50 120 Q 420 15 1150 110"
+            stroke="url(#arcGoldGradient)"
+            strokeWidth="1.2"
+            strokeDasharray="4 6"
+            opacity="0.55"
+          />
+          {/* Secondary faint orbit line */}
+          <path
+            d="M 120 145 Q 460 35 1100 135"
+            stroke="url(#arcGoldGradient)"
+            strokeWidth="0.8"
+            opacity="0.3"
+          />
+          {/* Radiant 8-pointed star on the upper-left orbit (Image 2) */}
+          <g transform="translate(240, 42)">
+            <circle cx="0" cy="0" r="14" fill="rgba(200, 168, 120, 0.12)" />
+            <circle cx="0" cy="0" r="6" fill="rgba(200, 168, 120, 0.25)" />
+            {/* 8-point gold star path */}
+            <path
+              d="M 0 -18 L 3 -5 L 18 0 L 3 5 L 0 18 L -3 5 L -18 0 L -3 -5 Z"
+              fill="#E0C69B"
+            />
+            {/* Diagonal flare rays */}
+            <path
+              d="M -9 -9 L 9 9 M -9 9 L 9 -9"
+              stroke="#C8A878"
+              strokeWidth="0.8"
+              opacity="0.7"
+            />
+            <circle cx="0" cy="0" r="1.5" fill="#FFFFFF" />
+          </g>
+          {/* Subtle accent twinkle on right */}
+          <g transform="translate(940, 72)" opacity="0.6">
+            <path
+              d="M 0 -8 L 1.5 -2 L 8 0 L 1.5 2 L 0 8 L -1.5 2 L -8 0 L -1.5 -2 Z"
+              fill="#C8A878"
+            />
+          </g>
+          <defs>
+            <linearGradient id="arcGoldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#C8A878" stopOpacity="0.05" />
+              <stop offset="25%" stopColor="#C8A878" stopOpacity="0.8" />
+              <stop offset="60%" stopColor="#E0C69B" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#C8A878" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      {/* Main Header Wrapper */}
       <header
         role="banner"
         className={`site-header ${isScrolled ? 'header-scrolled' : ''}`}
       >
-        {/* Top Demo Notice Banner - Integrated seamlessly above navigation */}
+        {/* Top Demo Notice Banner */}
         <aside
           aria-label="Avertissement de démonstration"
           className="header-top-banner"
@@ -70,70 +145,78 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           <span>✦ MAISON ÉTOILE PARIS — SITE OFFICIEL DE DÉMONSTRATION ARTISTIQUE & PORTFOLIO ✦</span>
         </aside>
 
-        <div className="container-wide header-nav-row">
-          {/* Logo link */}
-          <a
-            href="#hero"
-            onClick={(e) => handleLinkClick(e, '#hero')}
-            aria-label="Maison Étoile Accueil"
-            className="brand-logo-link"
-          >
-            <BrandMark variant="compact" />
-          </a>
-
-          {/* Desktop Navigation */}
-          <nav
-            role="navigation"
-            aria-label="Navigation principale"
-            className="desktop-nav"
-          >
-            {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className="nav-link-item"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Reservation Action Button & Mobile Menu Toggle */}
-          <div className="header-actions">
+        {/* Floating Capsule Dock Bar (Image 2 Signature Navigation Dock) */}
+        <div className="navbar-capsule-dock-wrapper">
+          <div className="navbar-floating-dock">
+            {/* Brand Logo & Name */}
             <a
-              href="#reservations"
-              onClick={(e) => {
-                if (onOpenReservationModal) {
-                  e.preventDefault();
-                  onOpenReservationModal();
-                } else {
-                  handleLinkClick(e, '#reservations');
-                }
-              }}
-              className="btn-glass-primary reserve-nav-btn"
-              aria-label="Réserver une table à Maison Étoile"
+              href="#hero"
+              onClick={(e) => handleLinkClick(e, '#hero')}
+              aria-label="Maison Étoile Accueil"
+              className="brand-dock-link"
             >
-              <Calendar size={14} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
-              <span className="reserve-btn-text">RÉSERVER</span>
+              <BrandMark variant="compact" />
             </a>
 
-            {/* Mobile Toggle Button */}
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-navigation-drawer"
-              className="mobile-toggle-btn"
+            {/* Desktop Navigation Links with Active Gold Underline */}
+            <nav
+              role="navigation"
+              aria-label="Navigation principale"
+              className="desktop-dock-nav"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                    className={`dock-nav-item ${isActive ? 'is-active' : ''}`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    <span>{link.label}</span>
+                    <span className="dock-link-underline" aria-hidden="true" />
+                  </a>
+                );
+              })}
+            </nav>
+
+            {/* Right Action Area: Capsule RÉSERVER Button & Mobile 3-Line Menu */}
+            <div className="dock-actions">
+              <a
+                href="#reservations"
+                onClick={(e) => {
+                  if (onOpenReservationModal) {
+                    e.preventDefault();
+                    onOpenReservationModal();
+                  } else {
+                    handleLinkClick(e, '#reservations');
+                  }
+                }}
+                className="dock-reserve-btn"
+                aria-label="Réserver une table à Maison Étoile"
+              >
+                <Calendar size={13} className="reserve-icon" aria-hidden="true" />
+                <span className="reserve-btn-text">RÉSERVER</span>
+              </a>
+
+              {/* Mobile 3-Line Hamburger Button (Matching Image 3 Icon Button) */}
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation'}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation-drawer"
+                className="btn-icon-gold mobile-toggle-btn"
+              >
+                {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer Overlay */}
+      {/* Mobile Drawer Overlay & Glass Card (Matching Image 3 Specification) */}
       <div
         id="mobile-navigation-drawer"
         role="dialog"
@@ -145,11 +228,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
         }}
       >
         <div className="mobile-drawer-card">
-          {/* Explicit Close Button inside Drawer */}
+          {/* Top Circular Glass Close Button (Matching Image 3 Icon Button) */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(false)}
-            className="drawer-close-btn"
+            className="btn-icon-gold drawer-close-btn"
             aria-label="Fermer le menu"
           >
             <X size={18} />
@@ -160,11 +243,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
             <BrandMark subtitle="HAUTE GASTRONOMIE • PARIS" variant="compact" />
           </div>
 
+          {/* Gold Star Line Ornament */}
           <div className="drawer-ornament-line" aria-hidden="true">
             <span className="drawer-ornament-star">✦</span>
           </div>
 
-          {/* Mobile Navigation Links as Frosted Glass Capsules */}
+          {/* Mobile Navigation List as Soft Glass Capsules with Gold Numerals */}
           <nav className="mobile-nav-list" aria-label="Navigation mobile">
             {navLinks.map((link, idx) => (
               <a
@@ -188,7 +272,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
             ))}
           </nav>
 
-          {/* CTA Reservation Button */}
+          {/* CTA Reservation Button (Primary Glass Button from Image 3) */}
           <a
             href="#reservations"
             onClick={(e) => {
@@ -204,6 +288,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           >
             <Sparkles size={14} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
             <span>RÉSERVER UNE TABLE</span>
+            <ChevronRight size={15} aria-hidden="true" />
           </a>
 
           {/* Drawer Footer Details */}
@@ -221,6 +306,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
       </div>
 
       <style>{`
+        /* Celestial Arc Background (Image 2) */
+        .celestial-arc-bg {
+          position: fixed;
+          top: 32px;
+          left: 0;
+          right: 0;
+          height: 140px;
+          pointer-events: none;
+          z-index: 95;
+          overflow: hidden;
+        }
+
+        .celestial-arc-svg {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+
+        /* Top Header Container */
         .site-header {
           position: fixed;
           top: 0;
@@ -228,22 +332,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           right: 0;
           z-index: 100;
           transition: all 0.35s ease;
-          background: rgba(16, 24, 39, 0.65);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-          border-bottom: 1px solid rgba(232, 223, 208, 0.08);
+          pointer-events: none; /* Let clicks pass outside the dock */
         }
 
-        .header-scrolled {
-          background: rgba(16, 24, 39, 0.94);
-          border-bottom: 1px solid rgba(200, 168, 120, 0.25);
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+        .site-header * {
+          pointer-events: auto;
         }
 
+        /* Top Notice Banner */
         .header-top-banner {
           background: linear-gradient(90deg, #17243B 0%, #101827 50%, #17243B 100%);
           border-bottom: 1px solid rgba(200, 168, 120, 0.2);
-          padding: 0.35rem 1rem;
+          padding: 0.32rem 1rem;
           text-align: center;
           font-size: 0.6875rem;
           font-family: var(--font-sans);
@@ -253,93 +353,154 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           transition: all 0.3s ease;
         }
 
-        .header-nav-row {
+        .navbar-capsule-dock-wrapper {
+          display: flex;
+          justify-content: center;
+          padding: 0.75rem 1rem 0;
+          width: 100%;
+        }
+
+        /* Floating Capsule Dock (Image 2) */
+        .navbar-floating-dock {
+          width: 100%;
+          max-width: 1060px;
+          height: 60px;
+          border-radius: 50px;
+          background: rgba(16, 24, 39, 0.72);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(200, 168, 120, 0.42);
+          box-shadow: 0 14px 38px rgba(0, 0, 0, 0.55), 0 0 24px rgba(200, 168, 120, 0.12), inset 0 1px 0 rgba(232, 223, 208, 0.15);
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 76px;
-          transition: height 0.35s ease;
+          padding: 0 1.5rem;
+          transition: all 0.35s ease;
         }
 
-        .header-scrolled .header-nav-row {
-          height: 68px;
+        .header-scrolled .navbar-floating-dock {
+          background: rgba(16, 24, 39, 0.92);
+          border-color: rgba(200, 168, 120, 0.6);
+          box-shadow: 0 16px 42px rgba(0, 0, 0, 0.75), 0 0 30px rgba(200, 168, 120, 0.22);
+          height: 56px;
         }
 
-        .brand-logo-link {
+        .brand-dock-link {
           display: inline-flex;
           align-items: center;
+          text-decoration: none;
           z-index: 10;
         }
 
-        .desktop-nav {
+        /* Desktop Nav List inside Dock */
+        .desktop-dock-nav {
           display: none;
           align-items: center;
-          gap: 2.25rem;
+          gap: 1.85rem;
         }
 
-        .nav-link-item {
+        .dock-nav-item {
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
           font-family: var(--font-sans);
-          font-size: 0.8125rem;
-          font-weight: 400;
+          font-size: 0.75rem;
+          font-weight: 500;
           letter-spacing: 0.18em;
           color: var(--color-ivory);
+          text-decoration: none;
           transition: color var(--transition-fast), transform var(--transition-fast);
           position: relative;
+          padding: 0.35rem 0.15rem;
         }
 
-        .nav-link-item:hover {
+        .dock-nav-item:hover {
           color: var(--color-gold) !important;
         }
 
-        .nav-link-item::after {
-          content: '';
+        /* Candlelight Gold Underline for Active Item (Image 2) */
+        .dock-link-underline {
           position: absolute;
-          bottom: -4px;
+          bottom: -2px;
           left: 50%;
+          transform: translateX(-50%);
           width: 0%;
-          height: 1px;
-          background-color: var(--color-gold);
-          transition: width 0.25s ease, left 0.25s ease;
+          height: 2px;
+          border-radius: 2px;
+          background: var(--color-gold);
+          box-shadow: 0 0 8px rgba(200, 168, 120, 0.6);
+          transition: width 0.25s ease;
         }
 
-        .nav-link-item:hover::after {
+        .dock-nav-item:hover .dock-link-underline {
           width: 100%;
-          left: 0;
         }
 
-        .header-actions {
+        .dock-nav-item.is-active {
+          color: var(--color-gold) !important;
+        }
+
+        .dock-nav-item.is-active .dock-link-underline {
+          width: 100%;
+        }
+
+        /* Right Actions */
+        .dock-actions {
           display: flex;
           align-items: center;
-          gap: 0.85rem;
+          gap: 0.75rem;
         }
 
-        .reserve-nav-btn {
-          height: 44px;
-          min-width: 135px;
+        /* Capsule RÉSERVER Button (Matching Image 2 & 3) */
+        .dock-reserve-btn {
+          height: 40px;
+          min-width: 124px;
           padding: 0 1.25rem;
+          border-radius: 50px;
+          background: rgba(23, 36, 59, 0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid var(--color-gold);
+          box-shadow: 0 8px 24px rgba(200, 168, 120, 0.15), inset 0 1px 1px rgba(232, 223, 208, 0.2);
+          color: var(--color-ivory);
+          font-family: var(--font-sans);
           font-size: 0.75rem;
+          font-weight: 500;
           letter-spacing: 0.16em;
-        }
-
-        .mobile-toggle-btn {
+          text-transform: uppercase;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          background: rgba(23, 36, 59, 0.7);
-          border: 1px solid var(--color-gold-border);
-          color: var(--color-ivory);
+          gap: 0.5rem;
+          text-decoration: none;
+          cursor: pointer;
           transition: all var(--transition-fast);
         }
 
-        .mobile-toggle-btn:hover {
-          border-color: var(--color-gold);
-          background: rgba(200, 168, 120, 0.15);
+        .dock-reserve-btn:hover {
+          background: rgba(200, 168, 120, 0.2);
+          border-color: #E0C69B;
+          color: #FFFFFF;
+          box-shadow: 0 0 22px rgba(200, 168, 120, 0.45), 0 8px 24px rgba(0, 0, 0, 0.6);
+          transform: translateY(-1px);
         }
 
-        /* Mobile Drawer Overlay */
+        .dock-reserve-btn:active {
+          transform: translateY(1px);
+        }
+
+        .reserve-icon {
+          color: var(--color-gold);
+        }
+
+        /* Mobile 3-Line Toggle Button */
+        .mobile-toggle-btn {
+          width: 40px !important;
+          height: 40px !important;
+        }
+
+        /* Mobile Drawer Overlay (Image 3) */
         .mobile-drawer-overlay {
           position: fixed;
           top: 0;
@@ -347,7 +508,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           right: 0;
           bottom: 0;
           z-index: 150;
-          background: radial-gradient(circle at 50% 18%, rgba(200, 168, 120, 0.14) 0%, rgba(16, 24, 39, 0.9) 55%, rgba(10, 15, 25, 0.98) 100%);
+          background: radial-gradient(circle at 50% 18%, rgba(200, 168, 120, 0.16) 0%, rgba(16, 24, 39, 0.92) 55%, rgba(10, 15, 25, 0.98) 100%);
           backdrop-filter: blur(28px);
           -webkit-backdrop-filter: blur(28px);
           overflow-y: auto;
@@ -358,7 +519,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           padding: 1.5rem 1rem;
           opacity: 0;
           pointer-events: none;
-          transition: opacity 0.35s ease, backdrop-filter 0.35s ease;
+          transition: opacity 0.35s ease;
         }
 
         .mobile-drawer-overlay.is-open {
@@ -366,19 +527,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           pointer-events: all;
         }
 
-        /* Frosted Glass Container Card */
+        /* Drawer Card Modal (Soft Glassmorphic 20-30% opacity, 1px gold border, shadow) */
         .mobile-drawer-card {
           position: relative;
           width: 100%;
           max-width: 420px;
           margin: auto;
           background: linear-gradient(165deg, rgba(23, 36, 59, 0.8) 0%, rgba(16, 24, 39, 0.92) 100%);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(200, 168, 120, 0.35);
-          border-radius: 20px;
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(200, 168, 120, 0.4);
+          border-radius: 24px;
           padding: 2.25rem 1.35rem 1.65rem;
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(200, 168, 120, 0.15), inset 0 1px 0 rgba(232, 223, 208, 0.2);
+          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 8px 24px rgba(200, 168, 120, 0.18), inset 0 1px 0 rgba(232, 223, 208, 0.2);
           transform: translateY(20px) scale(0.97);
           transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -391,25 +552,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           position: absolute;
           top: 16px;
           right: 16px;
-          width: 38px;
-          height: 38px;
-          border-radius: 50%;
-          background: rgba(23, 36, 59, 0.7);
-          border: 1px solid rgba(200, 168, 120, 0.3);
-          color: var(--color-silver);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all var(--transition-fast);
-          cursor: pointer;
-        }
-
-        .drawer-close-btn:hover, .drawer-close-btn:focus-visible {
-          color: #fff;
-          border-color: var(--color-gold);
-          background: rgba(200, 168, 120, 0.25);
-          box-shadow: 0 0 15px rgba(200, 168, 120, 0.3);
-          transform: scale(1.05);
+          width: 38px !important;
+          height: 38px !important;
         }
 
         .drawer-header-brand {
@@ -453,11 +597,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           align-items: center;
           justify-content: space-between;
           padding: 0.75rem 1rem;
-          background: rgba(23, 36, 59, 0.5);
+          background: rgba(23, 36, 59, 0.45);
           backdrop-filter: blur(8px);
           -webkit-backdrop-filter: blur(8px);
-          border: 1px solid rgba(200, 168, 120, 0.18);
-          border-radius: 12px;
+          border: 1px solid rgba(200, 168, 120, 0.22);
+          border-radius: 14px;
           box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(232, 223, 208, 0.08);
           text-decoration: none;
           transition: all 0.22s ease;
@@ -483,7 +627,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           font-weight: 600;
           letter-spacing: 0.16em;
           color: var(--color-gold);
-          opacity: 0.85;
+          opacity: 0.9;
           min-width: 18px;
         }
 
@@ -531,7 +675,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           font-size: 0.75rem;
           letter-spacing: 0.16em;
           margin-bottom: 1.25rem;
-          box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 18px rgba(200, 168, 120, 0.25);
         }
 
         .drawer-footer-details {
@@ -557,8 +700,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           flex-shrink: 0;
         }
 
+        /* Desktop media queries */
         @media (min-width: 992px) {
-          .desktop-nav {
+          .desktop-dock-nav {
             display: flex !important;
           }
           .mobile-toggle-btn {
@@ -567,22 +711,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
         }
 
         @media (max-width: 991px) {
-          .desktop-nav {
+          .desktop-dock-nav {
             display: none !important;
+          }
+          .navbar-floating-dock {
+            padding: 0 1rem;
+            height: 54px;
+          }
+          .celestial-arc-bg {
+            display: none;
           }
         }
 
-        @media (max-width: 420px) {
+        @media (max-width: 480px) {
+          .navbar-capsule-dock-wrapper {
+            padding: 0.5rem 0.5rem 0;
+          }
           .header-top-banner {
-            font-size: 0.625rem;
-            padding: 0.25rem 0.5rem;
+            font-size: 0.6rem;
+            padding: 0.25rem 0.35rem;
+            letter-spacing: 0.08em;
           }
           .reserve-btn-text {
             display: none;
           }
-          .reserve-nav-btn {
-            min-width: 44px;
-            width: 44px;
+          .dock-reserve-btn {
+            min-width: 40px;
+            width: 40px;
+            height: 40px;
             padding: 0;
             border-radius: 50%;
           }
