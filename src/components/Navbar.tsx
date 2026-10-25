@@ -13,17 +13,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 30);
 
-      // Determine active section for desktop nav underline indicator (matching Image 2)
+      // 1. If at the top of the page, ACCUEIL ('hero') is strictly active
+      if (scrollY < 180) {
+        setActiveSection('hero');
+        return;
+      }
+
+      // 2. If near the bottom of the page, CONTACT is active
+      const scrollBottom = window.innerHeight + scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      if (scrollBottom >= docHeight - 120) {
+        setActiveSection('contact');
+        return;
+      }
+
+      // 3. Otherwise compute section in view using getBoundingClientRect()
       const sectionIds = ['hero', 'our-story', 'menu', 'experience', 'gallery', 'contact'];
-      const scrollPos = window.scrollY + 140;
-
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sectionIds[i]);
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveSection(sectionIds[i]);
-          break;
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          // Active if section crosses the viewport reading line (140px below top)
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            setActiveSection(id);
+            return;
+          }
         }
       }
     };
@@ -332,7 +349,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           right: 0;
           z-index: 100;
           transition: all 0.35s ease;
-          pointer-events: none; /* Let clicks pass outside the dock */
+          pointer-events: none;
         }
 
         .site-header * {
@@ -356,33 +373,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
         .navbar-capsule-dock-wrapper {
           display: flex;
           justify-content: center;
-          padding: 0.75rem 1rem 0;
+          padding: 0.85rem 1.25rem 0;
           width: 100%;
         }
 
-        /* Floating Capsule Dock (Image 2) */
+        /* Floating Capsule Dock (Spacious, elegant, perfectly balanced) */
         .navbar-floating-dock {
           width: 100%;
-          max-width: 1060px;
-          height: 60px;
+          max-width: 1240px;
+          height: 64px;
           border-radius: 50px;
-          background: rgba(16, 24, 39, 0.72);
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
+          background: rgba(16, 24, 39, 0.76);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
           border: 1px solid rgba(200, 168, 120, 0.42);
-          box-shadow: 0 14px 38px rgba(0, 0, 0, 0.55), 0 0 24px rgba(200, 168, 120, 0.12), inset 0 1px 0 rgba(232, 223, 208, 0.15);
+          box-shadow: 0 16px 42px rgba(0, 0, 0, 0.55), 0 0 24px rgba(200, 168, 120, 0.12), inset 0 1px 0 rgba(232, 223, 208, 0.15);
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 0 1.5rem;
+          padding: 0 1.75rem;
+          gap: 1.5rem;
           transition: all 0.35s ease;
         }
 
         .header-scrolled .navbar-floating-dock {
-          background: rgba(16, 24, 39, 0.92);
+          background: rgba(16, 24, 39, 0.94);
           border-color: rgba(200, 168, 120, 0.6);
-          box-shadow: 0 16px 42px rgba(0, 0, 0, 0.75), 0 0 30px rgba(200, 168, 120, 0.22);
-          height: 56px;
+          box-shadow: 0 18px 46px rgba(0, 0, 0, 0.75), 0 0 30px rgba(200, 168, 120, 0.22);
+          height: 58px;
         }
 
         .brand-dock-link {
@@ -390,13 +408,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           align-items: center;
           text-decoration: none;
           z-index: 10;
+          flex-shrink: 0;
         }
 
         /* Desktop Nav List inside Dock */
         .desktop-dock-nav {
           display: none;
           align-items: center;
-          gap: 1.85rem;
+          justify-content: center;
+          gap: 2rem;
+          flex: 1;
+          min-width: 0;
         }
 
         .dock-nav-item {
@@ -405,14 +427,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           align-items: center;
           justify-content: center;
           font-family: var(--font-sans);
-          font-size: 0.75rem;
+          font-size: 0.8125rem;
           font-weight: 500;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.16em;
           color: var(--color-ivory);
           text-decoration: none;
           transition: color var(--transition-fast), transform var(--transition-fast);
           position: relative;
-          padding: 0.35rem 0.15rem;
+          padding: 0.45rem 0.25rem;
+          white-space: nowrap !important;
+          flex-shrink: 0;
         }
 
         .dock-nav-item:hover {
@@ -422,7 +446,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
         /* Candlelight Gold Underline for Active Item (Image 2) */
         .dock-link-underline {
           position: absolute;
-          bottom: -2px;
+          bottom: 0;
           left: 50%;
           transform: translateX(-50%);
           width: 0%;
@@ -430,7 +454,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           border-radius: 2px;
           background: var(--color-gold);
           box-shadow: 0 0 8px rgba(200, 168, 120, 0.6);
-          transition: width 0.25s ease;
+          transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .dock-nav-item:hover .dock-link-underline {
@@ -449,14 +473,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
         .dock-actions {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 0.85rem;
+          flex-shrink: 0;
         }
 
         /* Capsule RÉSERVER Button (Matching Image 2 & 3) */
         .dock-reserve-btn {
-          height: 40px;
-          min-width: 124px;
-          padding: 0 1.25rem;
+          height: 42px;
+          min-width: 130px;
+          padding: 0 1.35rem;
           border-radius: 50px;
           background: rgba(23, 36, 59, 0.45);
           backdrop-filter: blur(12px);
@@ -475,6 +500,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           gap: 0.5rem;
           text-decoration: none;
           cursor: pointer;
+          white-space: nowrap;
           transition: all var(--transition-fast);
         }
 
@@ -496,8 +522,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
 
         /* Mobile 3-Line Toggle Button */
         .mobile-toggle-btn {
-          width: 40px !important;
-          height: 40px !important;
+          width: 42px !important;
+          height: 42px !important;
+          flex-shrink: 0;
         }
 
         /* Mobile Drawer Overlay (Image 3) */
@@ -700,32 +727,86 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           flex-shrink: 0;
         }
 
-        /* Desktop media queries */
-        @media (min-width: 992px) {
+        /* Responsive Breakpoints & Spacing Rules */
+        @media (min-width: 1240px) {
           .desktop-dock-nav {
             display: flex !important;
+            gap: 2rem;
           }
           .mobile-toggle-btn {
             display: none !important;
           }
         }
 
+        @media (min-width: 1080px) and (max-width: 1239px) {
+          .desktop-dock-nav {
+            display: flex !important;
+            gap: 1.35rem;
+          }
+          .dock-nav-item {
+            font-size: 0.75rem;
+            letter-spacing: 0.13em;
+          }
+          .navbar-floating-dock {
+            padding: 0 1.25rem;
+            gap: 1.15rem;
+          }
+          .mobile-toggle-btn {
+            display: none !important;
+          }
+        }
+
+        @media (min-width: 992px) and (max-width: 1079px) {
+          .desktop-dock-nav {
+            display: flex !important;
+            gap: 0.85rem;
+          }
+          .dock-nav-item {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+          }
+          .navbar-floating-dock {
+            padding: 0 1rem;
+            gap: 0.85rem;
+          }
+          .dock-reserve-btn {
+            padding: 0 0.95rem;
+            min-width: 110px;
+            font-size: 0.7rem;
+          }
+          .mobile-toggle-btn {
+            display: none !important;
+          }
+        }
+
+        /* Mobile & Tablet below 992px */
         @media (max-width: 991px) {
           .desktop-dock-nav {
             display: none !important;
           }
+          .navbar-capsule-dock-wrapper {
+            padding: 0.5rem 0.85rem 0;
+          }
           .navbar-floating-dock {
-            padding: 0 1rem;
-            height: 54px;
+            padding: 0 1.15rem;
+            height: 56px;
+            gap: 0.75rem;
           }
           .celestial-arc-bg {
             display: none;
+          }
+          .mobile-toggle-btn {
+            display: inline-flex !important;
           }
         }
 
         @media (max-width: 480px) {
           .navbar-capsule-dock-wrapper {
-            padding: 0.5rem 0.5rem 0;
+            padding: 0.45rem 0.5rem 0;
+          }
+          .navbar-floating-dock {
+            padding: 0 0.85rem;
+            height: 52px;
           }
           .header-top-banner {
             font-size: 0.6rem;
@@ -736,11 +817,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
             display: none;
           }
           .dock-reserve-btn {
-            min-width: 40px;
-            width: 40px;
-            height: 40px;
+            min-width: 38px;
+            width: 38px;
+            height: 38px;
             padding: 0;
             border-radius: 50%;
+          }
+          .mobile-toggle-btn {
+            width: 38px !important;
+            height: 38px !important;
           }
         }
       `}</style>
