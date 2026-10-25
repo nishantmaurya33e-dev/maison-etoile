@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Maison Étoile — Redirection</title>
+    <meta http-equiv="refresh" content="1; url=/maison-etoile/" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Single Page App redirect for GitHub Pages
+      // If someone lands on a subpath or mistyped case, route them back to /maison-etoile/
+      var repoBase = '/maison-etoile/';
+      if (window.location.pathname !== repoBase) {
+        window.location.replace(repoBase);
+      }
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: #101827;
+        color: #E8DFD0;
+        font-family: 'Montserrat', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+      }
+      .card {
+        max-width: 480px;
+        padding: 3rem 2rem;
+        background: rgba(23, 36, 59, 0.65);
+        border: 1px solid rgba(200, 168, 120, 0.35);
+        border-radius: 20px;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+      }
+      .star {
+        font-size: 1.5rem;
+        color: #C8A878;
+        margin-bottom: 1rem;
+        display: block;
+      }
+      h1 {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 2rem;
+        color: #FFFFFF;
+        letter-spacing: 0.12em;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+      }
+      p {
+        font-size: 0.875rem;
+        color: #A5A9B2;
+        letter-spacing: 0.05em;
+        line-height: 1.6;
+        margin-bottom: 1.75rem;
+      }
+      a.btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 1.85rem;
+        border-radius: 50px;
+        background: rgba(200, 168, 120, 0.15);
+        border: 1px solid #C8A878;
+        color: #E8DFD0;
+        text-decoration: none;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        transition: all 0.25s ease;
+      }
+      a.btn:hover {
+        background: rgba(200, 168, 120, 0.3);
+        color: #FFFFFF;
+        box-shadow: 0 0 20px rgba(200, 168, 120, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <span class="star">✦</span>
+      <h1>Maison Étoile</h1>
+      <p>Redirection en cours vers la table d'exception de Maison Étoile...</p>
+      <a class="btn" href="/maison-etoile/">Entrer dans l'expérience</a>
+    </div>
+  </body>
+</html>
