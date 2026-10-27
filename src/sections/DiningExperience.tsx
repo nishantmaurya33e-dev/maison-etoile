@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Utensils, Wine, Crown, ArrowRight, X } from 'lucide-react';
+import { Utensils, Wine, Crown, ArrowRight, X, Compass, Sparkles } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
 export const DiningExperience: React.FC = () => {
@@ -91,6 +91,34 @@ export const DiningExperience: React.FC = () => {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll World Immersive Showcase Card */}
+        <div className="world-experience-card reveal-on-scroll stagger-5">
+          <div className="world-card-glow" aria-hidden="true" />
+          <div className="world-card-content">
+            <div className="world-card-text">
+              <span className="world-card-eyebrow">
+                <Sparkles size={13} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
+                <span>EXPÉRIENCE CULINAIRE IMMERSIVE • SCROLL WORLD</span>
+              </span>
+              <h3 className="world-card-title">Survolez le Monde de Maison Étoile</h3>
+              <p className="world-card-description">
+                Plongez dans un vol cinématographique continu où chaque défilement guide la caméra à travers nos salons de réception, l’atelier secret du chef, la cave des 700 grands crus et notre table d’exception.
+              </p>
+            </div>
+            <div className="world-card-action">
+              <a
+                href="./world.html"
+                className="btn-glass-primary world-cta-btn"
+                aria-label="Lancer le voyage immersif 3D Scroll World"
+              >
+                <Compass size={15} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
+                <span>LANCER LE VOYAGE 3D</span>
+                <ArrowRight size={15} aria-hidden="true" style={{ color: 'var(--color-gold)' }} />
+              </a>
             </div>
           </div>
         </div>
@@ -375,7 +403,103 @@ export const DiningExperience: React.FC = () => {
           background: rgba(200, 168, 120, 0.2);
         }
 
+        /* World Experience Card (Scroll World) */
+        .world-experience-card {
+          margin-top: 3.5rem;
+          position: relative;
+          border-radius: 24px;
+          background: linear-gradient(135deg, rgba(23, 36, 59, 0.75) 0%, rgba(16, 24, 39, 0.9) 100%);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(200, 168, 120, 0.4);
+          padding: 2.25rem 2.5rem;
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 24px rgba(200, 168, 120, 0.12);
+          overflow: hidden;
+        }
+
+        .world-card-glow {
+          position: absolute;
+          top: -40px;
+          right: -40px;
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(200, 168, 120, 0.22) 0%, transparent 70%);
+          pointer-events: none;
+        }
+
+        .world-card-content {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 2.5rem;
+          position: relative;
+          z-index: 2;
+        }
+
+        .world-card-text {
+          max-width: 680px;
+        }
+
+        .world-card-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-family: var(--font-sans);
+          font-size: 0.72rem;
+          font-weight: 600;
+          letter-spacing: 0.18em;
+          color: var(--color-gold);
+          text-transform: uppercase;
+          margin-bottom: 0.75rem;
+        }
+
+        .world-card-title {
+          font-family: var(--font-serif);
+          font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+          color: var(--color-ivory);
+          font-weight: 500;
+          letter-spacing: 0.05em;
+          margin-bottom: 0.65rem;
+        }
+
+        .world-card-description {
+          font-size: 0.875rem;
+          color: var(--color-silver);
+          line-height: 1.7;
+          margin: 0;
+        }
+
+        .world-card-action {
+          flex-shrink: 0;
+        }
+
+        .world-cta-btn {
+          height: 48px;
+          padding: 0 1.65rem;
+          font-size: 0.75rem;
+          letter-spacing: 0.16em;
+          text-decoration: none;
+          gap: 0.6rem;
+        }
+
         @media (max-width: 991px) {
+          .world-card-content {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+          }
+          .world-experience-card {
+            padding: 1.85rem 1.5rem;
+            margin-top: 2.5rem;
+          }
+          .world-card-action {
+            width: 100%;
+          }
+          .world-cta-btn {
+            width: 100%;
+            justify-content: center;
+          }
           .experience-layout {
             grid-template-columns: 1fr;
             gap: 3rem;

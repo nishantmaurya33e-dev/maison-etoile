@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrandMark } from './BrandMark';
-import { Menu, X, Calendar, ChevronRight, Sparkles, MapPin, Clock } from 'lucide-react';
+import { Menu, X, Calendar, ChevronRight, Sparkles, MapPin, Clock, Compass } from 'lucide-react';
 
 interface NavbarProps {
   onOpenReservationModal?: () => void;
@@ -201,6 +201,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
             {/* Right Action Area: Capsule RÉSERVER Button & Mobile 3-Line Menu */}
             <div className="dock-actions">
               <a
+                href="./world.html"
+                className="dock-world-btn"
+                aria-label="Expérience immersive 3D Scroll World"
+                title="Voler à travers le monde Maison Étoile (Scroll World)"
+              >
+                <Compass size={13} className="world-compass-icon" aria-hidden="true" />
+                <span className="dock-world-text">LE VOYAGE 3D</span>
+              </a>
+
+              <a
                 href="#reservations"
                 onClick={(e) => {
                   if (onOpenReservationModal) {
@@ -288,6 +298,22 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
               </a>
             ))}
           </nav>
+
+          {/* Scroll World Immersive Feature in Mobile Drawer */}
+          <a
+            href="./world.html"
+            className="mobile-world-card-link"
+            aria-label="Expérience immersive 3D Scroll World"
+          >
+            <div className="mobile-world-left">
+              <Compass size={17} style={{ color: 'var(--color-gold)' }} aria-hidden="true" />
+              <div className="mobile-world-text">
+                <span className="mobile-world-title">VOYAGE IMMERSIF 3D</span>
+                <span className="mobile-world-sub">Scroll World • Salons & Cave</span>
+              </div>
+            </div>
+            <div className="mobile-world-badge" aria-hidden="true">✦</div>
+          </a>
 
           {/* CTA Reservation Button (Primary Glass Button from Image 3) */}
           <a
@@ -514,6 +540,106 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
 
         .dock-reserve-btn:active {
           transform: translateY(1px);
+        }
+
+        /* Dock World Immersive 3D Pill Button */
+        .dock-world-btn {
+          height: 42px;
+          padding: 0 1.15rem;
+          border-radius: 50px;
+          background: rgba(200, 168, 120, 0.12);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(200, 168, 120, 0.5);
+          box-shadow: 0 4px 18px rgba(200, 168, 120, 0.15);
+          color: var(--color-ivory);
+          font-family: var(--font-sans);
+          font-size: 0.72rem;
+          font-weight: 600;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.45rem;
+          text-decoration: none;
+          cursor: pointer;
+          white-space: nowrap;
+          transition: all var(--transition-fast);
+        }
+
+        .dock-world-btn:hover {
+          background: rgba(200, 168, 120, 0.28);
+          border-color: #E0C69B;
+          color: #FFFFFF;
+          box-shadow: 0 0 22px rgba(200, 168, 120, 0.45);
+          transform: translateY(-1px);
+        }
+
+        .world-compass-icon {
+          color: var(--color-gold);
+          animation: spinSlow 12s linear infinite;
+        }
+
+        @keyframes spinSlow {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile Drawer Scroll World Feature Card */
+        .mobile-world-card-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.85rem 1.1rem;
+          background: linear-gradient(135deg, rgba(200, 168, 120, 0.18) 0%, rgba(23, 36, 59, 0.75) 100%);
+          border: 1px solid rgba(200, 168, 120, 0.45);
+          border-radius: 14px;
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), 0 0 16px rgba(200, 168, 120, 0.15);
+          text-decoration: none;
+          margin-bottom: 1rem;
+          transition: all 0.25s ease;
+        }
+
+        .mobile-world-card-link:hover, .mobile-world-card-link:active {
+          transform: translateY(-2px);
+          border-color: #E0C69B;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 24px rgba(200, 168, 120, 0.35);
+        }
+
+        .mobile-world-left {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+        }
+
+        .mobile-world-text {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+          text-align: left;
+        }
+
+        .mobile-world-title {
+          font-family: var(--font-sans);
+          font-size: 0.75rem;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          color: #FFFFFF;
+          text-transform: uppercase;
+        }
+
+        .mobile-world-sub {
+          font-family: var(--font-sans);
+          font-size: 0.65rem;
+          letter-spacing: 0.06em;
+          color: var(--color-gold);
+        }
+
+        .mobile-world-badge {
+          color: var(--color-gold);
+          font-size: 0.85rem;
+          animation: badgePulse 2s ease-in-out infinite;
         }
 
         .reserve-icon {
@@ -779,8 +905,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           }
         }
 
+        @media (min-width: 992px) and (max-width: 1140px) {
+          .dock-world-text {
+            display: none;
+          }
+          .dock-world-btn {
+            padding: 0 0.75rem;
+            min-width: 40px;
+          }
+        }
+
         /* Mobile & Tablet below 992px */
         @media (max-width: 991px) {
+          .dock-world-btn {
+            display: none !important;
+          }
           .desktop-dock-nav {
             display: none !important;
           }

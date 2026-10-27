@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="fr-FR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Maison Étoile — Le Voyage Immersif (Scroll World)</title>
+  <meta name="description" content="Survolez l'univers gastronomique de Maison Étoile à Paris dans un voyage immersif continu guidé par votre défilement." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Maison Étoile — Le Voyage Immersif (Scroll World)" />
+  <meta property="og:description" content="Survolez l'univers gastronomique de Maison Étoile à Paris dans un voyage immersif continu guidé par votre défilement." />
+  <meta property="og:image" content="./og-cover.jpg" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+
+  <!-- Fonts: Cormorant Garamond & Montserrat -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* Theme variables for the scroll-world engine */
+    :root, .sw-root {
+      --sw-bg: #101827;
+      --sw-ink: #E8DFD0;
+      --sw-ink-soft: #A5A9B2;
+      --sw-accent: #C8A878;
+      --sw-font-display: 'Cormorant Garamond', Georgia, serif;
+      --sw-font-body: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--sw-bg);
+      color: var(--sw-ink);
+      font-family: var(--sw-font-body);
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Luxury brand customization overrides */
+    .sw-topbar {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(16, 24, 39, 0.72);
+      border-bottom: 1px solid rgba(200, 168, 120, 0.25);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .sw-brand__mark {
+      background: linear-gradient(135deg, #E0C69B 0%, #C8A878 100%) !important;
+      box-shadow: 0 0 16px rgba(200, 168, 120, 0.5) !important;
+      border-radius: 50% !important;
+      width: 28px !important;
+      height: 28px !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .sw-brand__mark::after {
+      content: '✦';
+      color: #101827;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .sw-brand__name {
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 1.15rem !important;
+      color: #FFFFFF !important;
+    }
+
+    .sw-nav {
+      background: rgba(23, 36, 59, 0.6) !important;
+      border: 1px solid rgba(200, 168, 120, 0.3) !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .sw-nav__item {
+      color: var(--sw-ink-soft) !important;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.75rem !important;
+      font-weight: 500 !important;
+      padding: 6px 14px !important;
+    }
+
+    .sw-nav__item:hover {
+      color: #FFFFFF !important;
+    }
+
+    .sw-nav__item.is-active {
+      color: #101827 !important;
+      background: linear-gradient(135deg, #E0C69B 0%, #C8A878 100%) !important;
+      font-weight: 600 !important;
+      box-shadow: 0 0 14px rgba(200, 168, 120, 0.4);
+    }
+
+    .sw-topcta {
+      background: rgba(23, 36, 59, 0.75) !important;
+      border: 1px solid #C8A878 !important;
+      color: #E8DFD0 !important;
+      box-shadow: 0 8px 24px rgba(200, 168, 120, 0.15) !important;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.75rem !important;
+      font-weight: 600 !important;
+      padding: 8px 18px !important;
+      transition: all 0.25s ease !important;
+    }
+
+    .sw-topcta:hover {
+      background: rgba(200, 168, 120, 0.25) !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 0 20px rgba(200, 168, 120, 0.4) !important;
+      transform: translateY(-1px);
+    }
+
+    .sw-copy__title {
+      letter-spacing: 0.04em !important;
+      font-weight: 500 !important;
+      color: #FFFFFF !important;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8) !important;
+    }
+
+    .sw-copy__body {
+      font-weight: 300 !important;
+      line-height: 1.7 !important;
+      color: #E8DFD0 !important;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9) !important;
+    }
+
+    .sw-copy__eyebrow {
+      color: #E0C69B !important;
+      letter-spacing: 0.2em !important;
+      font-size: 0.75rem !important;
+    }
+
+    .sw-copy__tags li {
+      background: rgba(23, 36, 59, 0.75) !important;
+      border: 1px solid rgba(200, 168, 120, 0.35) !important;
+      color: #E8DFD0 !important;
+      font-size: 0.75rem !important;
+      letter-spacing: 0.08em;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .sw-btn--primary {
+      background: linear-gradient(135deg, rgba(23, 36, 59, 0.85) 0%, rgba(16, 24, 39, 0.95) 100%) !important;
+      border: 1px solid #C8A878 !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 8px 24px rgba(200, 168, 120, 0.25) !important;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.8125rem !important;
+      padding: 12px 24px !important;
+    }
+
+    .sw-btn--primary:hover {
+      background: rgba(200, 168, 120, 0.25) !important;
+      box-shadow: 0 0 25px rgba(200, 168, 120, 0.5) !important;
+    }
+
+    .sw-btn--ghost {
+      border: 1px solid rgba(232, 223, 208, 0.35) !important;
+      color: #E8DFD0 !important;
+      background: rgba(16, 24, 39, 0.5) !important;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.8125rem !important;
+      padding: 12px 24px !important;
+    }
+
+    .sw-btn--ghost:hover {
+      border-color: #C8A878 !important;
+      color: #FFFFFF !important;
+      background: rgba(200, 168, 120, 0.15) !important;
+    }
+
+    /* Floating Exit Pill at Bottom Right */
+    .exit-world-pill {
+      position: fixed;
+      left: clamp(18px, 5vw, 64px);
+      bottom: 24px;
+      z-index: 60;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 50px;
+      background: rgba(16, 24, 39, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(200, 168, 120, 0.4);
+      color: #E8DFD0;
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      transition: all 0.25s ease;
+    }
+
+    .exit-world-pill:hover {
+      background: rgba(200, 168, 120, 0.2);
+      border-color: #E0C69B;
+      color: #FFFFFF;
+      box-shadow: 0 0 20px rgba(200, 168, 120, 0.4);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world"></div>
+
+  <!-- Quick Exit Button back to standard portal -->
+  <a href="./" class="exit-world-pill" aria-label="Retourner au portail Maison Étoile">
+    <span>← RETOUR AU SITE</span>
+  </a>
+
+  <script src="./scrub-engine.js"></script>
+  <script>
+    mountScrollWorld(document.getElementById('world'), {
+      brand: { name: 'MAISON ÉTOILE', href: './' },
+      cta: { label: 'RÉSERVER UNE TABLE', href: './#reservations' },
+      hint: 'DÉFILEZ POUR VOLER À TRAVERS LE MONDE',
+      diveScroll: 1.4,
+      connScroll: 0.9,
+      atmosphere: true,
+      sections: [
+        {
+          id: 'salon',
+          label: 'Le Salon',
+          still: './images/hero/hero-cinematic.jpg',
+          accent: '#C8A878',
+          eyebrow: 'Haute Gastronomie Parisienne',
+          title: "L'Éveil des Sens à Paris.",
+          body: "Sous la lueur dorée des bougies et le cristal des lustres, chaque table de Maison Étoile célèbre l'art de vivre français et la passion du goût.",
+          tags: ['Paris 8ème', 'Place de la Concorde', 'Haute Gastronomie'],
+        },
+        {
+          id: 'histoire',
+          label: "L'Héritage",
+          still: './images/story/story-interior.jpg',
+          accent: '#E0C69B',
+          eyebrow: 'Depuis 1889',
+          title: 'Une Histoire Gravée dans la Pierre.',
+          body: 'Lustres de cristal de Baccarat, boiseries sculptées et vue majestueuse sur la Seine. Plus d’un siècle d’excellence préservée avec ferveur.',
+          tags: ['Patrimoine Historique', 'Cristal de Baccarat', 'Art Déco'],
+        },
+        {
+          id: 'chef',
+          label: "L'Atelier",
+          still: './images/gallery/gallery-chef.jpg',
+          accent: '#C8A878',
+          eyebrow: 'Création Culinaire',
+          title: "La Rigueur de l'Artiste.",
+          body: "La précision millimétrée du geste, le respect absolu des terroirs nobles et la recherche constante de l'émotion gastronomique pure.",
+          tags: ['Gestes Précis', 'Terroirs Français', 'Création Vivante'],
+        },
+        {
+          id: 'cave',
+          label: 'La Cave',
+          still: './images/gallery/gallery-wine.jpg',
+          accent: '#D4AF37',
+          eyebrow: 'Sommellerie de Légende',
+          title: '700 Flacons Rares.',
+          body: 'Bordeaux centenaires, Bourgognes d’auteur et champagnes de vignerons indépendants, veillés jalousement dans nos salons voûtés.',
+          tags: ['Grands Crus Classés', 'Millésimes Rares', 'Accords Mets & Vins'],
+        },
+        {
+          id: 'table',
+          label: 'La Table',
+          still: './images/gallery/gallery-table.jpg',
+          accent: '#C8A878',
+          eyebrow: "L'Instant Précieux",
+          title: "L'Harmonie du Festin.",
+          body: 'Porcelaine fine de Limoges, argenterie d’orfèvre étincelante et ballet de service synchronisé pour un moment inoubliable.',
+          tags: ['Service au Guéridon', 'Art de la Table', 'Intimité Feutrée'],
+        },
+        {
+          id: 'paris',
+          label: "L'Étoile",
+          still: './images/gallery/gallery-paris.jpg',
+          accent: '#E8DFD0',
+          eyebrow: 'Votre Invitation Privée',
+          title: 'La Nuit Parisienne Vous Attend.',
+          body: 'Rejoignez notre table d’exception sous le ciel étoilé de Paris. Une expérience intemporelle gravée dans la mémoire.',
+          tags: ['Réservation Exclusive', 'Paris Romantique', 'Guide Gastronomique'],
+          cta: {
+            primary: { label: 'Réserver une table', href: './#reservations' },
+            secondary: { label: 'Retour au site', href: './' },
+          },
+        },
+      ],
+      connectors: [],
+    });
+  </script>
+</body>
+</html>

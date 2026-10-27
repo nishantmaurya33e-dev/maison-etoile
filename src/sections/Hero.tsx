@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Play, Compass } from 'lucide-react';
 import { getAssetUrl } from '../utils/assets';
 
 interface HeroProps {
@@ -76,6 +76,17 @@ export const Hero: React.FC<HeroProps> = ({
               <Play size={14} aria-hidden="true" style={{ fill: 'currentColor', opacity: 0.8 }} />
               <span>WATCH OUR STORY</span>
             </button>
+
+            {/* Scroll World Immersive Experience CTA */}
+            <a
+              href="./world.html"
+              className="btn-secondary hero-btn-secondary hero-btn-world hero-anim-secondary-cta"
+              aria-label="Voler à travers le monde Maison Étoile (Scroll World)"
+            >
+              <Compass size={14} aria-hidden="true" style={{ color: 'var(--color-gold)' }} />
+              <span>VOYAGE IMMERSIF 3D</span>
+              <span className="hero-world-badge" aria-hidden="true">✦</span>
+            </a>
           </div>
 
           {/* Trust & Heritage Micro-Badges - Rise Animation */}
@@ -193,6 +204,32 @@ export const Hero: React.FC<HeroProps> = ({
           gap: 1.35rem;
           flex-wrap: wrap;
           margin-bottom: 3.5rem;
+        }
+
+        .hero-btn-world {
+          border-color: rgba(200, 168, 120, 0.45) !important;
+          background: rgba(200, 168, 120, 0.08) !important;
+          gap: 0.55rem;
+          text-decoration: none;
+        }
+
+        .hero-btn-world:hover {
+          background: rgba(200, 168, 120, 0.22) !important;
+          border-color: #E0C69B !important;
+          box-shadow: 0 0 25px rgba(200, 168, 120, 0.45) !important;
+          transform: translateY(-2px);
+        }
+
+        .hero-world-badge {
+          color: var(--color-gold);
+          font-size: 0.8rem;
+          margin-left: 2px;
+          animation: badgePulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.3); }
         }
 
         .hero-meta {
