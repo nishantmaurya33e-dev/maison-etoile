@@ -201,16 +201,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
             {/* Right Action Area: Capsule RÉSERVER Button & Mobile 3-Line Menu */}
             <div className="dock-actions">
               <a
-                href="./world.html"
-                className="dock-world-btn"
-                aria-label="Expérience immersive 3D Scroll World"
-                title="Voler à travers le monde Maison Étoile (Scroll World)"
-              >
-                <Compass size={13} className="world-compass-icon" aria-hidden="true" />
-                <span className="dock-world-text">LE VOYAGE 3D</span>
-              </a>
-
-              <a
                 href="#reservations"
                 onClick={(e) => {
                   if (onOpenReservationModal) {
@@ -542,50 +532,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           transform: translateY(1px);
         }
 
-        /* Dock World Immersive 3D Pill Button */
-        .dock-world-btn {
-          height: 42px;
-          padding: 0 1.15rem;
-          border-radius: 50px;
-          background: rgba(200, 168, 120, 0.12);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          border: 1px solid rgba(200, 168, 120, 0.5);
-          box-shadow: 0 4px 18px rgba(200, 168, 120, 0.15);
-          color: var(--color-ivory);
-          font-family: var(--font-sans);
-          font-size: 0.72rem;
-          font-weight: 600;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.45rem;
-          text-decoration: none;
-          cursor: pointer;
-          white-space: nowrap;
-          transition: all var(--transition-fast);
-        }
-
-        .dock-world-btn:hover {
-          background: rgba(200, 168, 120, 0.28);
-          border-color: #E0C69B;
-          color: #FFFFFF;
-          box-shadow: 0 0 22px rgba(200, 168, 120, 0.45);
-          transform: translateY(-1px);
-        }
-
-        .world-compass-icon {
-          color: var(--color-gold);
-          animation: spinSlow 12s linear infinite;
-        }
-
-        @keyframes spinSlow {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-
         /* Mobile Drawer Scroll World Feature Card */
         .mobile-world-card-link {
           display: flex;
@@ -905,21 +851,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
           }
         }
 
-        @media (min-width: 992px) and (max-width: 1140px) {
-          .dock-world-text {
-            display: none;
-          }
-          .dock-world-btn {
-            padding: 0 0.75rem;
-            min-width: 40px;
-          }
-        }
-
         /* Mobile & Tablet below 992px */
         @media (max-width: 991px) {
-          .dock-world-btn {
-            display: none !important;
-          }
           .desktop-dock-nav {
             display: none !important;
           }
