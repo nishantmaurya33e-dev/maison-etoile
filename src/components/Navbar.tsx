@@ -201,16 +201,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenReservationModal }) => {
             {/* Right Action Area: Capsule RÉSERVER Button & Mobile 3-Line Menu */}
             <div className="dock-actions">
               <a
-                href="./world.html"
-                className="dock-world-btn"
-                aria-label="Expérience immersive 3D Scroll World"
-                title="Voler à travers le monde Maison Étoile (Scroll World)"
-              >
-                <Compass size={13} className="world-compass-icon" aria-hidden="true" />
-                <span className="dock-world-text">LE VOYAGE 3D</span>
-              </a>
-
-              <a
                 href="#reservations"
                 onClick={(e) => {
                   if (onOpenReservationModal) {
