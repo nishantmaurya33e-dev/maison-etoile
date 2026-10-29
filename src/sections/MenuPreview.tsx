@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SIGNATURE_DISHES, ALL_MENU_ITEMS } from '../data/restaurantData';
 import { DishItem } from '../types';
-import { Wine, Sparkles, Check } from 'lucide-react';
+import { Wine, Sparkles, Check, X } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { getAssetUrl } from '../utils/assets';
 
@@ -12,6 +12,22 @@ interface MenuPreviewProps {
 export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
   const [activeCategory, setActiveCategory] = useState<'signature' | 'all' | 'entree' | 'plat' | 'dessert'>('signature');
   const [selectedDishModal, setSelectedDishModal] = useState<DishItem | null>(null);
+
+  // Close modal on Escape key & lock scroll when dish modal is open
+  useEffect(() => {
+    if (!selectedDishModal) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedDishModal(null);
+      }
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedDishModal]);
 
   // Trigger scroll reveal whenever category changes
   useScrollReveal(activeCategory);
@@ -161,7 +177,7 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={selectedDishModal.name}
+          aria-labelledby="dish-modal-title"
           className="dish-modal-overlay"
           onClick={() => setSelectedDishModal(null)}
         >
@@ -169,6 +185,14 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
             className="dish-modal-card"
             onClick={(e) => e.stopPropagation()}
           >
+            <button
+              type="button"
+              onClick={() => setSelectedDishModal(null)}
+              className="dish-modal-close-btn"
+              aria-label="Fermer la fiche du plat"
+            >
+              <X size={18} />
+            </button>
             <div className="dish-modal-img-col">
               <img
                 src={getAssetUrl(selectedDishModal.image)}
@@ -180,7 +204,7 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
               <div className="section-label" style={{ textAlign: 'left', marginBottom: '0.5rem' }}>
                 {selectedDishModal.frenchCategory}
               </div>
-              <h3 className="modal-dish-title">{selectedDishModal.name}</h3>
+              <h3 id="dish-modal-title" className="modal-dish-title">{selectedDishModal.name}</h3>
               <p className="modal-dish-price">
                 {selectedDishModal.price} <span className="demo-price-tag">Tarif Démo</span>
               </p>
@@ -469,6 +493,32 @@ export const MenuPreview: React.FC<MenuPreviewProps> = ({ onReserveDish }) => {
           grid-template-columns: 1fr 1.2fr;
           overflow: hidden;
           box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+          position: relative;
+        }
+
+        .dish-modal-close-btn {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(16, 24, 39, 0.75);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(200, 168, 120, 0.4);
+          color: var(--color-silver);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10;
+          transition: all var(--transition-fast);
+        }
+
+        .dish-modal-close-btn:hover {
+          color: #FFFFFF;
+          border-color: var(--color-gold);
+          background: rgba(200, 168, 120, 0.2);
         }
 
         .dish-modal-img-col {
